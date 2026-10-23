@@ -1,5 +1,6 @@
 <script setup>
 import { computed } from 'vue'
+import { formatAmount } from '../utils/format'
 import { isValid } from '../utils/validation'
 
 const props = defineProps({
@@ -13,6 +14,14 @@ const value = defineModel({ default: '' })
 
 const invalid = computed(() => !isValid(value.value))
 const errorId = computed(() => `${props.id}-error`)
+const shown = computed(() =>
+  props.readonly ? formatAmount(value.value, props.label) : value.value,
+)
+
+function onInput(event) {
+  if (props.readonly) return
+  value.value = event.target.value
+}
 </script>
 
 <template>
@@ -20,11 +29,12 @@ const errorId = computed(() => `${props.id}-error`)
     <label class="label" :for="id">{{ label }}</label>
     <input
       :id="id"
-      v-model="value"
+      :value="shown"
       type="text"
       inputmode="decimal"
       autocomplete="off"
       :readonly="readonly"
+      @input="onInput"
       :placeholder="placeholder"
       :class="{ invalid }"
       :aria-invalid="invalid"

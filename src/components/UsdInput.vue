@@ -1,10 +1,27 @@
 <script setup>
-import { computed } from 'vue'
+import { computed, ref } from 'vue'
+import { formatAmount } from '../utils/format'
 import { isValid } from '../utils/validation'
 
 const value = defineModel({ default: '0' })
+const focused = ref(false)
 
 const invalid = computed(() => !isValid(value.value))
+const shown = computed(() => {
+  if (focused.value || value.value === '' || invalid.value) return value.value
+  return formatAmount(value.value)
+})
+
+function onInput(event) {
+  value.value = event.target.value
+}
+
+function onBlur() {
+  focused.value = false
+  if (value.value !== '' && isValid(value.value)) {
+    value.value = String(Number(value.value))
+  }
+}
 </script>
 
 <template>
@@ -14,10 +31,13 @@ const invalid = computed(() => !isValid(value.value))
       <span class="prefix" aria-hidden="true">$</span>
       <input
         id="usd"
-        v-model="value"
+        :value="shown"
         type="text"
         inputmode="decimal"
         autocomplete="off"
+        @focus="focused = true"
+        @blur="onBlur"
+        @input="onInput"
         :class="{ invalid }"
         :aria-invalid="invalid"
         aria-describedby="usd-error"
