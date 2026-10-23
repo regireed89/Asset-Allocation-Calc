@@ -2,7 +2,7 @@
 import { computed } from 'vue'
 import { isValid } from '../utils/validation'
 
-const value = defineModel({ default: '50' })
+const value = defineModel({ default: '0' })
 
 const invalid = computed(() => !isValid(value.value))
 </script>

@@ -2,6 +2,11 @@
 import { computed } from 'vue'
 import { isValid } from '../utils/validation'
 
+defineProps({
+  label: { type: String, default: 'USD amount' },
+  step: { type: String, default: 'any' },
+})
+
 const value = defineModel({ default: '0' })
 
 const sliderValue = computed(() => {
@@ -24,8 +29,8 @@ function onInput(event) {
       type="range"
       min="0"
       max="100"
-      step="any"
-      aria-label="USD amount"
+      :step="step"
+      :aria-label="label"
       :value="sliderValue"
       @input="onInput"
     />

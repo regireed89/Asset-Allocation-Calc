@@ -2,9 +2,9 @@
 import { ref } from 'vue'
 import SliderCard from './components/SliderCard.vue'
 
-const usd = ref('50')
-const btc = ref('')
-const eth = ref('')
+const usd = ref('0')
+const btc = ref('0')
+const eth = ref('0')
 </script>
 
 <template>

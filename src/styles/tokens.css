@@ -242,3 +242,21 @@ input.invalid:focus-visible {
 .field .error {
   white-space: nowrap;
 }
+
+.results {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.rate-note {
+  margin: 0;
+  font-size: 24px;
+  font-weight: 600;
+  text-align: center;
+  color: var(--text-muted);
+}
+
+.rate-note-error {
+  color: var(--error);
+}
