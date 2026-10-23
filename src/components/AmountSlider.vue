@@ -14,7 +14,12 @@ const sliderValue = computed(() => {
   if (current === '' || !isValid(current)) return 0
   const amount = Number(current)
   if (!Number.isFinite(amount)) return 0
-  return amount
+  return Math.min(100, Math.max(0, amount))
+})
+
+const sliderPosition = computed(() => {
+  const ratio = sliderValue.value / 100
+  return `calc(${ratio} * (100% - 52px) + 26px)`
 })
 
 function onInput(event) {
@@ -34,6 +39,9 @@ function onInput(event) {
       :value="sliderValue"
       @input="onInput"
     />
+    <span class="slider-value" :style="{ left: sliderPosition }" aria-hidden="true">
+      {{ sliderValue }}
+    </span>
     <div class="scale">
       <span>0</span>
       <span>100</span>

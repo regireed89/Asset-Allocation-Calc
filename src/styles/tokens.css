@@ -118,7 +118,20 @@ body {
 }
 
 .amount-slider {
+  position: relative;
   width: 100%;
+}
+
+.slider-value {
+  position: absolute;
+  top: 74px;
+  transform: translateX(-50%);
+  font-size: 24px;
+  font-weight: 600;
+  line-height: 1;
+  color: var(--text);
+  pointer-events: none;
+  white-space: nowrap;
 }
 
 .slider {
@@ -177,6 +190,7 @@ body {
 .scale {
   display: flex;
   justify-content: space-between;
+  margin-top: 28px;
   font-size: 24px;
   font-weight: 500;
   color: var(--text-muted);
