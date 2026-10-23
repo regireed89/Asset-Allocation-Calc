@@ -1,0 +1,17 @@
+:root {
+  --bg-page: #e6eeea;
+  --bg-card: #f6f9f7;
+  --bg-input: #eef4f1;
+  --bg-pill: #e3ede8;
+  --border-card: #d3e0d9;
+  --border-input: #8fab9e;
+  --track: #cddbd4;
+  --text: #1f3a33;
+  --text-muted: #4f655d;
+  --placeholder: #5f736b;
+  --accent: #2f7d6b;
+  --error: #b3261e;
+  --error-strong: #c62828;
+  --error-text: #8f1d1d;
+  --error-bg: #fdeceb;
+}
