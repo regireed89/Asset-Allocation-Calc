@@ -1,8 +1,8 @@
 <script setup>
-import { computed } from 'vue'
+import { computed, nextTick } from 'vue'
 import { useFitText } from '../utils/fitText'
 import { formatAmount } from '../utils/format'
-import { isValid } from '../utils/validation'
+import { isValid, numericText } from '../utils/validation'
 
 const props = defineProps({
   id: { type: String, required: true },
@@ -19,9 +19,25 @@ const shown = computed(() =>
   props.readonly ? formatAmount(value.value, props.label) : value.value,
 )
 
+function onBeforeInput(event) {
+  if (props.readonly || event.data == null) return
+  const el = event.target
+  const start = el.selectionStart ?? 0
+  const end = el.selectionEnd ?? 0
+  const rawNext = el.value.slice(0, start) + event.data + el.value.slice(end)
+  const next = numericText(rawNext)
+  if (next === rawNext) return
+  event.preventDefault()
+  const caret = numericText(el.value.slice(0, start) + event.data).length
+  if (next !== el.value) value.value = next
+  nextTick(() => el.setSelectionRange(caret, caret))
+}
+
 function onInput(event) {
   if (props.readonly) return
-  value.value = event.target.value
+  const next = numericText(event.target.value)
+  value.value = next
+  if (event.target.value !== next) event.target.value = next
 }
 
 const { input, fontSize } = useFitText(shown, 22, 14)
@@ -39,6 +55,7 @@ const { input, fontSize } = useFitText(shown, 22, 14)
       inputmode="decimal"
       autocomplete="off"
       :readonly="readonly"
+      @beforeinput="onBeforeInput"
       @input="onInput"
       :placeholder="placeholder"
       :class="{ invalid }"

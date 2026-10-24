@@ -20,3 +20,4 @@ One coding agent. No subagents. Keep this to about one page and update it as we 
 | Add the title “Asset allocation calculator” at the center top of the page. | Added a centered heading at the top. The card sits below it. | — |
 | The page is too big and shows a scrollbar. Make the card or page smaller. | Tried a smaller card. You asked to undo it because the scrollbar was still there, so the previous size is restored. | — |
 | Why is there a scrollbar and white space at the bottom? | The card stack is 904px, so a shorter window scrolls. The white strip is the default page background: sage is only on `.page`, and a hidden measuring span sat below it. | — |
+| Do not allow characters to be typed in the input. | Digits and one decimal point stay. Letters and other characters are dropped before they appear. | — |

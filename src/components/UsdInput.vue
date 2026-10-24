@@ -1,8 +1,8 @@
 <script setup>
-import { computed, ref } from 'vue'
+import { computed, nextTick, ref } from 'vue'
 import { useFitText } from '../utils/fitText'
 import { formatAmount } from '../utils/format'
-import { isValid } from '../utils/validation'
+import { isValid, numericText } from '../utils/validation'
 
 const value = defineModel({ default: '0' })
 const focused = ref(false)
@@ -13,8 +13,24 @@ const shown = computed(() => {
   return formatAmount(value.value)
 })
 
+function onBeforeInput(event) {
+  if (event.data == null) return
+  const el = event.target
+  const start = el.selectionStart ?? 0
+  const end = el.selectionEnd ?? 0
+  const rawNext = el.value.slice(0, start) + event.data + el.value.slice(end)
+  const next = numericText(rawNext)
+  if (next === rawNext) return
+  event.preventDefault()
+  const caret = numericText(el.value.slice(0, start) + event.data).length
+  if (next !== el.value) value.value = next
+  nextTick(() => el.setSelectionRange(caret, caret))
+}
+
 function onInput(event) {
-  value.value = event.target.value
+  const next = numericText(event.target.value)
+  value.value = next
+  if (event.target.value !== next) event.target.value = next
 }
 
 function onBlur() {
@@ -42,6 +58,7 @@ const { input, fontSize } = useFitText(shown, 48, 24)
         autocomplete="off"
         @focus="focused = true"
         @blur="onBlur"
+        @beforeinput="onBeforeInput"
         @input="onInput"
         :class="{ invalid }"
         :aria-invalid="invalid"
