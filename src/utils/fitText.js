@@ -5,7 +5,9 @@ let probe
 function textWidth(text, source, fontSize) {
   if (!probe) {
     probe = document.createElement('span')
-    probe.style.position = 'absolute'
+    probe.style.position = 'fixed'
+    probe.style.top = '0'
+    probe.style.left = '0'
     probe.style.visibility = 'hidden'
     probe.style.whiteSpace = 'nowrap'
     probe.style.pointerEvents = 'none'

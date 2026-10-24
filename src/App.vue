@@ -9,6 +9,7 @@ const eth = ref('0')
 
 <template>
   <div class="page">
+    <h1 class="title">Asset allocation calculator</h1>
     <SliderCard v-model:usd="usd" v-model:btc="btc" v-model:eth="eth" />
   </div>
 </template>
