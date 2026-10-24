@@ -1,5 +1,6 @@
 <script setup>
 import { computed, ref } from 'vue'
+import { useFitText } from '../utils/fitText'
 import { formatAmount } from '../utils/format'
 import { isValid } from '../utils/validation'
 
@@ -22,16 +23,20 @@ function onBlur() {
     value.value = String(Number(value.value))
   }
 }
+
+const { input, fontSize } = useFitText(shown, 48, 24)
 </script>
 
 <template>
   <div class="usd-input">
     <label class="pill" for="usd">USD</label>
     <div class="field">
-      <span class="prefix" aria-hidden="true">$</span>
+      <span class="prefix" :style="{ fontSize: `${Math.round(fontSize * 0.8)}px` }" aria-hidden="true">$</span>
       <input
         id="usd"
+        ref="input"
         :value="shown"
+        :style="{ fontSize: `${fontSize}px` }"
         type="text"
         inputmode="decimal"
         autocomplete="off"

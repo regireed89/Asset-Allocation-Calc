@@ -1,5 +1,6 @@
 <script setup>
 import { computed } from 'vue'
+import { useFitText } from '../utils/fitText'
 import { formatAmount } from '../utils/format'
 import { isValid } from '../utils/validation'
 
@@ -22,6 +23,8 @@ function onInput(event) {
   if (props.readonly) return
   value.value = event.target.value
 }
+
+const { input, fontSize } = useFitText(shown, 22, 14)
 </script>
 
 <template>
@@ -29,7 +32,9 @@ function onInput(event) {
     <label class="label" :for="id">{{ label }}</label>
     <input
       :id="id"
+      ref="input"
       :value="shown"
+      :style="{ fontSize: `${fontSize}px` }"
       type="text"
       inputmode="decimal"
       autocomplete="off"
