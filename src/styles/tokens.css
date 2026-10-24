@@ -3,7 +3,7 @@
   --bg-card: #f6f9f7;
   --bg-input: #eef4f1;
   --bg-pill: #e3ede8;
-  --border-card: #d3e0d9;
+  --border-card: #6d9b86;
   --border-input: #8fab9e;
   --track: #cddbd4;
   --text: #1f3a33;
@@ -178,8 +178,8 @@ body {
   margin-top: -20px;
   border-radius: 50%;
   background: var(--accent);
-  border: 8px solid var(--bg-card);
-  box-shadow: 0 2px 10px rgba(31, 58, 51, 0.35);
+  border: none;
+  box-shadow: none;
 }
 
 .slider::-moz-range-track {
@@ -190,12 +190,13 @@ body {
 }
 
 .slider::-moz-range-thumb {
-  width: 36px;
-  height: 36px;
+  box-sizing: border-box;
+  width: 52px;
+  height: 52px;
   border-radius: 50%;
   background: var(--accent);
-  border: 8px solid var(--bg-card);
-  box-shadow: 0 2px 10px rgba(31, 58, 51, 0.35);
+  border: none;
+  box-shadow: none;
 }
 
 .scale {
