@@ -3,6 +3,7 @@ import { onMounted, ref, watch } from "vue";
 import AmountField from "./AmountField.vue";
 import AmountSlider from "./AmountSlider.vue";
 import RefreshRates from "./RefreshRates.vue";
+import ResetButton from "./ResetButton.vue";
 import UsdInput from "./UsdInput.vue";
 import { isValid } from "../utils/validation";
 import { loadExchangeRates } from "../utils/exchangeRates";
@@ -65,6 +66,13 @@ watch(
   { immediate: true },
 );
 
+function resetCard() {
+  usd.value = "0";
+  btc.value = "0";
+  eth.value = "0";
+  btcPercent.value = "70";
+}
+
 onMounted(() => {
   pullRates(false);
 });
@@ -72,6 +80,7 @@ onMounted(() => {
 
 <template>
   <div class="card">
+    <ResetButton @reset="resetCard" />
     <UsdInput v-model="usd" />
     <AmountSlider v-model="btcPercent" label="BTC percentage" step="1" />
     <div class="results">

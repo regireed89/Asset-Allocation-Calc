@@ -25,3 +25,4 @@ One coding agent. No subagents. Keep this to about one page and update it as we 
 | Add a Refresh Data button at the bottom middle of the card. Show minutes since the last pull, and a brief red error if the pull fails. | The button calls the same rate load. “Last updated # minutes ago” sits under it. “Error refreshing rates” replaces that line for 3 seconds. | — |
 | Change Refresh Data to Refresh Rates. | The button label is now Refresh Rates. | — |
 | Make the refresh button its own component. | Moved the button, minute stamp, and brief error into `RefreshRates.vue`. The card still loads the rates. | — |
+| Add a reset button at the top right, half the size of Refresh Rates. Both buttons use the slider’s dark green with white lettering. | `ResetButton.vue` sets USD to 0 and the split back to 70/30. Both buttons use the accent green and white text. | — |
