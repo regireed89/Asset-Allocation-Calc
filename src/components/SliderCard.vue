@@ -2,6 +2,7 @@
 import { onMounted, ref, watch } from "vue";
 import AmountField from "./AmountField.vue";
 import AmountSlider from "./AmountSlider.vue";
+import RefreshRates from "./RefreshRates.vue";
 import UsdInput from "./UsdInput.vue";
 import { isValid } from "../utils/validation";
 import { loadExchangeRates } from "../utils/exchangeRates";
@@ -14,6 +15,27 @@ const btcPercent = ref("70");
 const rates = ref(null);
 const rateError = ref("");
 const usingStoredRates = ref(false);
+const lastUpdated = ref(0);
+const refreshFailedAt = ref(0);
+const refreshing = ref(false);
+
+async function pullRates(fromButton) {
+  if (refreshing.value) return;
+  refreshing.value = true;
+  try {
+    const result = await loadExchangeRates();
+    rates.value = result.rates;
+    usingStoredRates.value = result.stale;
+    rateError.value = result.error?.message ?? "";
+    if (result.error) {
+      if (fromButton) refreshFailedAt.value = Date.now();
+      return;
+    }
+    lastUpdated.value = Date.now();
+  } finally {
+    refreshing.value = false;
+  }
+}
 
 function formatAmount(amount) {
   if (!Number.isFinite(amount) || amount === 0) return "0";
@@ -43,11 +65,8 @@ watch(
   { immediate: true },
 );
 
-onMounted(async () => {
-  const result = await loadExchangeRates();
-  rates.value = result.rates;
-  usingStoredRates.value = result.stale;
-  rateError.value = result.error?.message ?? "";
+onMounted(() => {
+  pullRates(false);
 });
 </script>
 
@@ -67,5 +86,11 @@ onMounted(async () => {
         {{ rateError }}
       </p>
     </div>
+    <RefreshRates
+      :updated-at="lastUpdated"
+      :failed-at="refreshFailedAt"
+      :busy="refreshing"
+      @refresh="pullRates(true)"
+    />
   </div>
 </template>

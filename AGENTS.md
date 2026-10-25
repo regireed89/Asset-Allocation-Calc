@@ -22,3 +22,6 @@ One coding agent. No subagents. Keep this to about one page and update it as we 
 | Do not allow characters to be typed in the input. | Digits and one decimal point stay. Letters and other characters are dropped before they appear. | — |
 | Give the page more contrast and make the card the focus with a slight green border. | The card border is a soft green (`#6d9b86`) so the card stands out from the page. | — |
 | Remove the white border around the slider knob and make the knob more matte. | The knob is a flat accent circle. The card-colored ring and drop shadow are gone. | — |
+| Add a Refresh Data button at the bottom middle of the card. Show minutes since the last pull, and a brief red error if the pull fails. | The button calls the same rate load. “Last updated # minutes ago” sits under it. “Error refreshing rates” replaces that line for 3 seconds. | — |
+| Change Refresh Data to Refresh Rates. | The button label is now Refresh Rates. | — |
+| Make the refresh button its own component. | Moved the button, minute stamp, and brief error into `RefreshRates.vue`. The card still loads the rates. | — |
