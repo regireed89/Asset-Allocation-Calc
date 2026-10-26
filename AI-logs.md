@@ -30,3 +30,4 @@ One coding agent. No subagents. Add a row when a prompt changes the project. Nam
 | Make the amount fields cards with a smaller corner radius, a dark-to-light green fade, and white text. Titles stay above the amounts. | BTC and ETH are gradient cards. The title and amount are white text on each card. | — |
 | Redo `AGENTS.md` as project instructions. Move the old log into a separate file. | Instructions are in `AGENTS.md`. This history is `AI-logs.md`. | — |
 | The brief and the hiring-manager guide are attached. Explain the components, the math, and the CSS. Do not copy the guide’s code. No study comments. Keep this log. | `AGENTS.md` now states the assessment goals in our own words. The guide’s sample code is not in the repo. | — |
+| Update the README for this project. | Rewrote `README.md` with what the page does, how to run it, a few decisions, what was left out, and where AI was used. | — |
