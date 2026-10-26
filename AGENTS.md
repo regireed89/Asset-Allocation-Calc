@@ -2,7 +2,7 @@
 
 Vue 3 app for a Justworks associate front-end assessment. The author is a junior software engineer. The code should stay simple enough to study and to explain out loud: the components, the split math, and the CSS.
 
-A USD amount is split between BTC and ETH. The split starts at 70/30 and can be changed. The result is how much of each coin to buy. Coinbase returns how much coin one dollar buys, so coin amount = USD share × rate. ETH is whatever is left after the BTC share.
+A USD amount is split between BTC and ETH. The split starts at 70/30 and can be changed. The result is how much of each coin to buy. Coinbase returns how much coin one dollar buys, so coin amount = USD share × rate. ETH's dollars are whatever is left after the BTC share, so the two shares add back to the amount typed.
 
 Plan on about half a day to a day of work. The README should say what was built, how to run it, a few decisions, what was left out, and where AI was used.
 
@@ -12,7 +12,7 @@ JavaScript only. Vue files use `<script setup>`. No TypeScript and no new librar
 
 Prefer a straight function over a new layer. Name things with the words already on the page. Do not add comments for study. A separate study doc comes later.
 
-`coinAmount` is the split. The card calls it. Do not fold that formula back into the component.
+`splitUsd` is the dollar split. ETH's dollars are the remainder. `coinAmount` multiplies one dollar share by its rate. The card calls those. Do not fold that formula back into the component.
 
 Tests stay in `test/logic.test.js` and run with `npm test`, which is Node's built-in runner. They cover the split, USD parsing, and coin formatting. Do not add a test library, component snapshots, or a larger suite. Local imports in files that Node loads need a `.js` extension. Vue imports stay as they are.
 
@@ -26,7 +26,7 @@ Do not copy code, file names, or the sample structure from the hiring-manager gu
 - `UsdInput` keeps the typed string. Digits and one decimal point only. Empty stays empty and shows no message. `0` stays `0` and asks for an amount greater than zero. A letter or a minus sign is blocked and gets a short message. Leaving the field does not change what was typed. `0.001` stays visible.
 - The slider is the BTC share and starts at 70. The number under the thumb is that share. ETH is 100 minus the BTC share.
 - A circle under the slider shows that split. The center is open: BTC and ETH, with each percentage under its name. The circle follows the slider.
-- BTC and ETH are read-only cards. The title sits above the amount. The card fades from dark green to lighter green, with white text. Those coin amounts are the main numbers.
+- BTC and ETH are read-only cards. The title sits above the amount. The coin amount is the largest number. Under it, the dollar share, then the price of one coin. The card fades from dark green to lighter green, with white text. A coin amount uses fewer decimals as it grows.
 - The USD label, Reset, and Refresh Rates use the coin cards' corner radius, white text, and a flat green. The coin cards keep the fade.
 - `RefreshRates` reloads the rates. A failed refresh keeps the last good pair and says the results may be using previous rates. `ResetButton` clears the USD amount and sets the split back to 70/30. The empty field shows a `0.00` placeholder and no message.
 - The USD message follows the current text. Empty has none. Zero, a lone decimal, and a blocked character have one. Do not add a second timing rule.

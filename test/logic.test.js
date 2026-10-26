@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict'
 import { test } from 'node:test'
-import { coinAmount } from '../src/utils/coinAmount.js'
+import { coinAmount, splitUsd } from '../src/utils/coinAmount.js'
 import { formatAmount } from '../src/utils/format.js'
 import { blockedKeyMessage, numericText, usdNotice } from '../src/utils/validation.js'
 
@@ -25,17 +25,23 @@ test('an empty USD amount is quiet and zero asks for more', () => {
   assert.equal(formatAmount('1000000000'), '1,000,000,000.00')
 })
 
-test('each coin is the USD share times its rate', () => {
-  assert.equal(coinAmount('100', 70, '0.00002'), '0.0014')
-  assert.equal(coinAmount('100', 30, '2'), '60')
+test('ETH dollars are what is left after BTC', () => {
+  const even = splitUsd('100', 70)
+  assert.equal(even.btc + even.eth, 100)
+  assert.equal(coinAmount(even.btc, '0.00002'), '0.0014')
+  assert.equal(coinAmount(even.eth, '2'), '60')
+  const tight = splitUsd('0.1', 70)
+  assert.equal(tight.btc + tight.eth, 0.1)
 })
 
 test('an empty amount or a missing rate buys no coin', () => {
-  assert.equal(coinAmount('', 70, '0.00002'), '0')
-  assert.equal(coinAmount('100', 70, undefined), '0')
+  assert.deepEqual(splitUsd('', 70), { btc: 0, eth: 0 })
+  assert.equal(coinAmount(70, undefined), '0')
 })
 
-test('a coin amount uses grouping and at most eight decimal places', () => {
+test('a coin amount uses fewer decimals as it grows', () => {
+  assert.equal(formatAmount('0.123456789', 'BTC'), '0.12346')
+  assert.equal(formatAmount('12.34567', 'ETH'), '12.3457')
   assert.equal(formatAmount('1234.5', 'BTC'), '1,234.50')
-  assert.equal(formatAmount('0.123456789', 'ETH'), '0.12345679')
+  assert.equal(formatAmount('0', 'ETH'), '0')
 })

@@ -1,12 +1,13 @@
 <script setup>
-import { onMounted, ref, watch } from "vue";
+import { computed, onMounted, ref, watch } from "vue";
 import AmountField from "./AmountField.vue";
 import AmountSlider from "./AmountSlider.vue";
 import CircleGraph from "./CircleGraph.vue";
 import RefreshRates from "./RefreshRates.vue";
 import ResetButton from "./ResetButton.vue";
 import UsdInput from "./UsdInput.vue";
-import { coinAmount } from "../utils/coinAmount";
+import { coinAmount, coinPrice, splitUsd } from "../utils/coinAmount";
+import { formatAmount } from "../utils/format";
 import { loadExchangeRates } from "../utils/exchangeRates";
 
 const usd = defineModel("usd", { default: "" });
@@ -39,20 +40,23 @@ async function pullRates(fromButton) {
   }
 }
 
+const shares = computed(() => splitUsd(usd.value, btcPercent.value));
+
+function priceText(rate) {
+  const price = coinPrice(rate);
+  return price === "" ? "" : formatAmount(price);
+}
+
 watch(
-  [usd, btcPercent, rates],
+  [shares, rates],
   () => {
-    const percent = Number(btcPercent.value);
-    const btcShare = Number.isFinite(percent)
-      ? Math.min(100, Math.max(0, percent))
-      : 0;
     if (!rates.value) {
       btc.value = "0";
       eth.value = "0";
       return;
     }
-    btc.value = coinAmount(usd.value, btcShare, rates.value.btc);
-    eth.value = coinAmount(usd.value, 100 - btcShare, rates.value.eth);
+    btc.value = coinAmount(shares.value.btc, rates.value.btc);
+    eth.value = coinAmount(shares.value.eth, rates.value.eth);
   },
   { immediate: true },
 );
@@ -77,8 +81,22 @@ onMounted(() => {
     <CircleGraph :btc-percent="btcPercent" />
     <div class="results">
       <div class="row">
-        <AmountField id="btc" label="BTC" v-model="btc" readonly />
-        <AmountField id="eth" label="ETH" v-model="eth" readonly />
+        <AmountField
+          id="btc"
+          label="BTC"
+          v-model="btc"
+          readonly
+          :dollars="formatAmount(shares.btc)"
+          :price="priceText(rates?.btc)"
+        />
+        <AmountField
+          id="eth"
+          label="ETH"
+          v-model="eth"
+          readonly
+          :dollars="formatAmount(shares.eth)"
+          :price="priceText(rates?.eth)"
+        />
       </div>
       <p v-if="usingStoredRates" class="rate-note">
         Current results may be using the previous rates.

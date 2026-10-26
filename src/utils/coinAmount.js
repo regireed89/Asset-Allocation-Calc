@@ -1,22 +1,27 @@
 import { isValid } from './validation.js'
 
-function trimCoin(amount) {
+export function splitUsd(dollars, btcPercent) {
+  if (dollars === '' || !isValid(dollars)) return { btc: 0, eth: 0 }
+  const usdAmount = Number(dollars)
+  const percent = Number(btcPercent)
+  if (!Number.isFinite(usdAmount)) return { btc: 0, eth: 0 }
+  const share = Number.isFinite(percent) ? Math.min(100, Math.max(0, percent)) : 0
+  const btc = usdAmount * (share / 100)
+  return { btc, eth: usdAmount - btc }
+}
+
+export function coinAmount(usdShare, rate) {
+  const share = Number(usdShare)
+  const unitRate = Number(rate)
+  if (!Number.isFinite(share) || !Number.isFinite(unitRate)) return '0'
+  const amount = share * unitRate
   if (!Number.isFinite(amount) || amount === 0) return '0'
   const text = amount.toFixed(8).replace(/\.?0+$/, '')
   return text === '' ? '0' : text
 }
 
-export function coinAmount(dollars, percent, rate) {
-  if (dollars === '' || !isValid(dollars)) return '0'
-  const usdAmount = Number(dollars)
-  const share = Number(percent)
-  const unitRate = Number(rate)
-  if (
-    !Number.isFinite(usdAmount) ||
-    !Number.isFinite(share) ||
-    !Number.isFinite(unitRate)
-  ) {
-    return '0'
-  }
-  return trimCoin(usdAmount * (share / 100) * unitRate)
+export function coinPrice(rate) {
+  const unit = Number(rate)
+  if (!(unit > 0)) return ''
+  return 1 / unit
 }

@@ -9,6 +9,8 @@ const props = defineProps({
   label: { type: String, required: true },
   placeholder: { type: String, default: '0.00' },
   readonly: { type: Boolean, default: false },
+  dollars: { type: String, default: '' },
+  price: { type: String, default: '' },
 })
 
 const value = defineModel({ default: '' })
@@ -18,6 +20,12 @@ const errorId = computed(() => `${props.id}-error`)
 const shown = computed(() =>
   props.readonly ? formatAmount(value.value, props.label) : value.value,
 )
+const describedBy = computed(() => {
+  const ids = [errorId.value]
+  if (props.dollars) ids.push(`${props.id}-dollars`)
+  if (props.price) ids.push(`${props.id}-price`)
+  return ids.join(' ')
+})
 
 function onBeforeInput(event) {
   if (props.readonly || event.data == null) return
@@ -40,7 +48,7 @@ function onInput(event) {
   if (event.target.value !== next) event.target.value = next
 }
 
-const { input, fontSize } = useFitText(shown, 22, 14)
+const { input, fontSize } = useFitText(shown, 56, 18)
 </script>
 
 <template>
@@ -60,8 +68,10 @@ const { input, fontSize } = useFitText(shown, 22, 14)
       :placeholder="placeholder"
       :class="{ invalid }"
       :aria-invalid="invalid"
-      :aria-describedby="errorId"
+      :aria-describedby="describedBy"
     />
+    <p v-if="dollars" :id="`${id}-dollars`" class="coin-dollars">${{ dollars }}</p>
+    <p v-if="price" :id="`${id}-price`" class="coin-price">${{ price }} each</p>
     <p :id="errorId" class="error" role="alert" v-show="invalid">Enter a valid amount</p>
   </div>
 </template>

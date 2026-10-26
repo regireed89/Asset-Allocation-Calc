@@ -3,10 +3,12 @@ const usd = new Intl.NumberFormat('en-US', {
   currency: 'USD',
 })
 
-const coin = new Intl.NumberFormat('en-US', {
-  minimumFractionDigits: 2,
-  maximumFractionDigits: 8,
-})
+function coinDigits(amount) {
+  const size = Math.abs(amount)
+  if (size < 1) return 5
+  if (size < 100) return 4
+  return 2
+}
 
 const smallUsd = new Intl.NumberFormat('en-US', {
   minimumFractionDigits: 2,
@@ -29,5 +31,10 @@ export function formatAmount(value, currency = 'USD') {
       .join('')
       .trim()
   }
-  return coin.format(amount)
+  if (amount === 0) return '0'
+  const digits = coinDigits(amount)
+  return new Intl.NumberFormat('en-US', {
+    minimumFractionDigits: digits,
+    maximumFractionDigits: digits,
+  }).format(amount)
 }
