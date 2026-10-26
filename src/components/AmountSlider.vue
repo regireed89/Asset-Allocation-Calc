@@ -43,8 +43,8 @@ function onInput(event) {
       {{ sliderValue }}
     </span>
     <div class="scale">
-      <span>0</span>
-      <span>100</span>
+      <span>0%</span>
+      <span>100%</span>
     </div>
   </div>
 </template>
