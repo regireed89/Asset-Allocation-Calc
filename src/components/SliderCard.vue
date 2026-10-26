@@ -9,7 +9,7 @@ import UsdInput from "./UsdInput.vue";
 import { coinAmount } from "../utils/coinAmount";
 import { loadExchangeRates } from "../utils/exchangeRates";
 
-const usd = defineModel("usd", { default: "0" });
+const usd = defineModel("usd", { default: "" });
 const btc = defineModel("btc", { default: "0" });
 const eth = defineModel("eth", { default: "0" });
 
@@ -58,7 +58,7 @@ watch(
 );
 
 function resetCard() {
-  usd.value = "0";
+  usd.value = "";
   btc.value = "0";
   eth.value = "0";
   btcPercent.value = "70";

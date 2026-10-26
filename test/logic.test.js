@@ -2,19 +2,27 @@ import assert from 'node:assert/strict'
 import { test } from 'node:test'
 import { coinAmount } from '../src/utils/coinAmount.js'
 import { formatAmount } from '../src/utils/format.js'
-import { isValid, numericText } from '../src/utils/validation.js'
+import { blockedKeyMessage, numericText, usdNotice } from '../src/utils/validation.js'
 
 test('USD text keeps digits and one decimal point', () => {
   assert.equal(numericText('12a.3.4$'), '12.34')
   assert.equal(numericText(''), '')
   assert.equal(numericText('0'), '0')
+  assert.equal(numericText('-5'), '5')
+  assert.equal(blockedKeyMessage('-5'), 'Amounts cannot be negative.')
+  assert.equal(blockedKeyMessage('a'), 'Use digits and one decimal point.')
 })
 
-test('an empty USD amount is allowed and a lone decimal is not', () => {
-  assert.equal(isValid(''), true)
-  assert.equal(isValid('0'), true)
-  assert.equal(isValid('10.5'), true)
-  assert.equal(isValid('.'), false)
+test('an empty USD amount is quiet and zero asks for more', () => {
+  assert.equal(usdNotice(''), '')
+  assert.equal(usdNotice('0'), 'Enter an amount greater than zero.')
+  assert.equal(usdNotice('10.50'), '')
+  assert.equal(usdNotice('10.'), '')
+  assert.equal(usdNotice('0.001'), '')
+  assert.equal(usdNotice('.'), 'Enter a number.')
+  assert.equal(formatAmount('0.001'), '0.001')
+  assert.equal(formatAmount('10.50'), '10.50')
+  assert.equal(formatAmount('1000000000'), '1,000,000,000.00')
 })
 
 test('each coin is the USD share times its rate', () => {

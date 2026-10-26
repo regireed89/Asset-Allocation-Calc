@@ -23,13 +23,13 @@ Do not copy code, file names, or the sample structure from the hiring-manager gu
 ## How the page works
 
 - Styles live in `src/styles/tokens.css`. Do not add `<style>` blocks. Use the color variables already there.
-- `UsdInput` keeps the typed string. Digits and one decimal point only. Empty and `0` stay different.
+- `UsdInput` keeps the typed string. Digits and one decimal point only. Empty stays empty and shows no message. `0` stays `0` and asks for an amount greater than zero. A letter or a minus sign is blocked and gets a short message. Leaving the field does not change what was typed. `0.001` stays visible.
 - The slider is the BTC share and starts at 70. The number under the thumb is that share. ETH is 100 minus the BTC share.
 - A circle under the slider shows that split. The center is open: BTC and ETH, with each percentage under its name. The circle follows the slider.
 - BTC and ETH are read-only cards. The title sits above the amount. The card fades from dark green to lighter green, with white text. Those coin amounts are the main numbers.
 - The USD label, Reset, and Refresh Rates use the coin cards' corner radius, white text, and a flat green. The coin cards keep the fade.
-- `RefreshRates` reloads the rates. A failed refresh keeps the last good pair and says the results may be using previous rates. `ResetButton` sets USD back to 0 and the split back to 70/30.
-- When field errors should appear is not decided yet. Do not invent that timing.
+- `RefreshRates` reloads the rates. A failed refresh keeps the last good pair and says the results may be using previous rates. `ResetButton` clears the USD amount and sets the split back to 70/30. The empty field shows a `0.00` placeholder and no message.
+- The USD message follows the current text. Empty has none. Zero, a lone decimal, and a blocked character have one. Do not add a second timing rule.
 - The layout should stay usable on a phone. Do not hide the slider to make it fit. Below 640px the card tightens, the coin cards stack, and the slider stays visible.
 - Labels point at their fields. A keyboard user can reach the slider and both buttons.
 

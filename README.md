@@ -19,12 +19,12 @@ Vite prints a local URL. Open that in a browser.
 
 The page title is “Asset allocation calculator.” One card holds the controls. Rates load when the card opens.
 
-- **USD.** The field keeps the text you type. Digits and one decimal point stay. An empty field and `0` stay different. After you leave the field, a valid amount shows with thousands separators and two decimal places. A dollar sign sits beside the number.
+- **USD.** The field keeps the text you type. Digits and one decimal point stay. An empty field shows no message. `0` stays `0` and asks for an amount greater than zero. A letter or a minus sign is blocked and gets a short message. After you leave the field, the typed text is unchanged. Amounts of at least one cent show with thousands separators and two decimal places. A smaller amount, such as `0.001`, stays visible. A dollar sign sits beside the number.
 - **Slider.** The slider is the BTC share. It starts at 70 and moves from 0 to 100 in steps of 1. The current number sits under the thumb. ETH’s share is 100 minus that number.
 - **Circle.** Under the slider, a ring shows the BTC share in dark green and the rest in lighter green. The center is open: BTC and ETH, with each percentage under its name. The ring follows the slider.
 - **BTC and ETH.** These are read-only cards. The name sits above the amount. Each card fades from dark green to lighter green, with white text. The coin amount is the USD share times the Coinbase rate. Coinbase returns how much coin one dollar buys, so the amount is `dollars × (share / 100) × rate`. A long amount shrinks so it stays inside the field.
 - **Refresh Rates.** Loads the rates again. Under the button, “Last updated # minutes ago” counts from the last successful pull. A failed refresh keeps the last good pair, and the card says “Current results may be using the previous rates.” A failed button press also shows “Error refreshing rates” for 3 seconds.
-- **Reset.** Sets the USD amount back to 0 and the split back to 70/30.
+- **Reset.** Clears the USD amount and sets the split back to 70/30. The empty field shows `0.00` as a placeholder.
 
 The USD label, Reset, and Refresh Rates use the coin cards' rounded corners, in a flat green with white text.
 
@@ -39,12 +39,11 @@ Labels point at their fields. The slider and both buttons can be reached from th
 - Styles live in `src/styles/tokens.css`. Colors come from the variables at the top of that file.
 - `defineModel` connects the USD field, the slider, and the two coin amounts to the card.
 - `coinAmount` is the split: dollars × (share / 100) × rate. The card keeps the BTC share between 0 and 100 and gives ETH the rest. An empty amount or a missing rate is 0 coin.
-- BTC and ETH use grouping and up to eight decimal places. USD uses two decimal places after the field is left.
+- BTC and ETH use grouping and up to eight decimal places. After you leave USD, amounts of at least one cent use two decimal places. A smaller amount stays visible.
 - `npm test` uses Node's built-in test runner. The five tests in `test/logic.test.js` cover the split, USD parsing, and coin formatting. No test library was added.
 
 ## Left out
 
-- When a field error should appear is not decided. The USD field and the amount fields already include an error message for a value that is not a valid number. An empty USD field is allowed.
 - Component tests were left out.
 - The Vite starter files are still in the repo and are not part of the page: `src/components/HelloWorld.vue`, `src/style.css`, and the sample images in `src/assets`. The browser tab title in `index.html` is still `vite-scaffold`.
 

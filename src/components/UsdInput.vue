@@ -2,14 +2,15 @@
 import { computed, nextTick, ref } from 'vue'
 import { useFitText } from '../utils/fitText'
 import { formatAmount } from '../utils/format'
-import { isValid, numericText } from '../utils/validation'
+import { blockedKeyMessage, numericText, usdNotice } from '../utils/validation'
 
-const value = defineModel({ default: '0' })
+const value = defineModel({ default: '' })
 const focused = ref(false)
+const blocked = ref('')
 
-const invalid = computed(() => !isValid(value.value))
+const message = computed(() => blocked.value || usdNotice(value.value))
 const shown = computed(() => {
-  if (focused.value || value.value === '' || invalid.value) return value.value
+  if (focused.value || value.value === '' || usdNotice(value.value)) return value.value
   return formatAmount(value.value)
 })
 
@@ -20,24 +21,27 @@ function onBeforeInput(event) {
   const end = el.selectionEnd ?? 0
   const rawNext = el.value.slice(0, start) + event.data + el.value.slice(end)
   const next = numericText(rawNext)
-  if (next === rawNext) return
+  if (next === rawNext) {
+    blocked.value = ''
+    return
+  }
   event.preventDefault()
+  blocked.value = blockedKeyMessage(event.data)
   const caret = numericText(el.value.slice(0, start) + event.data).length
   if (next !== el.value) value.value = next
   nextTick(() => el.setSelectionRange(caret, caret))
 }
 
 function onInput(event) {
-  const next = numericText(event.target.value)
+  const raw = event.target.value
+  const next = numericText(raw)
+  blocked.value = next === raw ? '' : blockedKeyMessage(raw)
   value.value = next
   if (event.target.value !== next) event.target.value = next
 }
 
 function onBlur() {
   focused.value = false
-  if (value.value !== '' && isValid(value.value)) {
-    value.value = String(Number(value.value))
-  }
 }
 
 const { input, fontSize } = useFitText(shown, 48, 24)
@@ -54,18 +58,19 @@ const { input, fontSize } = useFitText(shown, 48, 24)
         :value="shown"
         :style="{ fontSize: `${fontSize}px` }"
         type="text"
+        placeholder="0.00"
         inputmode="decimal"
         autocomplete="off"
         @focus="focused = true"
         @blur="onBlur"
         @beforeinput="onBeforeInput"
         @input="onInput"
-        :class="{ invalid }"
-        :aria-invalid="invalid"
+        :class="{ invalid: message }"
+        :aria-invalid="message ? true : undefined"
         aria-describedby="usd-error"
       />
-      <p id="usd-error" class="error" role="alert" v-show="invalid">
-        Enter a valid amount of 0 or more
+      <p id="usd-error" class="error" role="alert" v-show="message">
+        {{ message }}
       </p>
     </div>
   </div>
