@@ -270,16 +270,19 @@ body {
 }
 
 .circle-graph-ring {
-  fill: none;
-  stroke-width: 22;
-}
-
-.circle-graph-btc {
-  stroke: var(--amount-card-top);
-}
-
-.circle-graph-eth {
-  stroke: var(--amount-card-bottom);
+  width: 100%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  transform: scaleX(-1);
+  background: conic-gradient(
+    from 0deg,
+    var(--amount-card-top) 0%,
+    var(--accent) var(--btc),
+    var(--track) var(--btc),
+    var(--bg-pill) 100%
+  );
+  -webkit-mask: radial-gradient(farthest-side, transparent 66%, #000 67.5% 88%, transparent 89.5%);
+  mask: radial-gradient(farthest-side, transparent 66%, #000 67.5% 88%, transparent 89.5%);
 }
 
 .circle-graph-center {

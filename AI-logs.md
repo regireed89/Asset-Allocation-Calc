@@ -50,3 +50,7 @@ One coding agent. No subagents. Add a row when a prompt changes the project. Nam
 | Add a very subtle pale-green radial gradient behind the calculator. | Grok 4.7. A soft pale-green ellipse sits behind the card and fades into the chart. | — |
 | Set the background opacity back to the original. | Grok 4.7. The chart field is the pale page sage again, and the grid is the faint border green at 55% opacity. | — |
 | When scrolling down, blank space covers the background image. | Grok 4.7. The glow behind the card no longer stretches past the page, so the chart stays visible below the card. | — |
+| Add color fading to each section of CircleGraph. | Grok 4.7. The BTC arc fades from the dark card green to the accent green. The ETH arc fades from the lighter card green to the input border green. | — |
+| Make the difference in the circle colors more obvious. ETH should be much lighter. | Grok 4.7. BTC stays the dark green. ETH now fades from the pale track green to the pill green. | — |
+| Also set the divider in the graph at the top and not on the side. | Grok 4.7. The split between BTC and ETH starts at the top of the ring. | — |
+| Flip the direction the graph moves. | Grok 4.7. The ring now grows the other way from the top. BTC still starts dark and ETH stays the pale section. | — |
