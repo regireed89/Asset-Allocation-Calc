@@ -24,19 +24,21 @@ function textWidth(text, source, fontSize) {
   return probe.offsetWidth
 }
 
-export function useFitText(text, max, min) {
+export function useFitText(text, max, min, reserve = 0) {
   const input = ref(null)
   const fontSize = ref(max)
+  const width = ref(0)
 
   function fit() {
     const el = input.value
     if (!el) return
     const style = getComputedStyle(el)
     const available =
-      el.clientWidth - parseFloat(style.paddingLeft) - parseFloat(style.paddingRight) - 4
+      el.clientWidth - parseFloat(style.paddingLeft) - parseFloat(style.paddingRight) - reserve - 4
     let size = max
     while (size > min && textWidth(text.value, el, size) > available) size -= 1
     fontSize.value = size
+    width.value = textWidth(text.value, el, size)
   }
 
   watch(text, () => nextTick(fit))
@@ -50,5 +52,5 @@ export function useFitText(text, max, min) {
 
   onUnmounted(() => observer?.disconnect())
 
-  return { input, fontSize }
+  return { input, fontSize, width }
 }

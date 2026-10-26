@@ -43,3 +43,4 @@ One coding agent. No subagents. Add a row when a prompt changes the project. Nam
 | Make any final updates to README.md and AGENTS.md. | Grok 4.7. Both files now match the chart background, the `0%` and `100%` slider ends, and the empty USD field. The README decisions are three. The chart file is listed as part of the page, and the unused Vite starter files are named on their own. | — |
 | Reduce radius of slider thumb. Add a thin white border. | Grok 4.7. The thumb is 36px instead of 52px, with a 2px white border. The number under it stays centered on the smaller thumb. | — |
 | Add a slight shadow to the thumb. | Grok 4.7. The thumb has a short soft shadow in the page’s dark green. | — |
+| Add an “Amount to allocate” label to the input section and move USD inside the input, to the right of the amount. | Grok 4.7. The field label is “Amount to allocate.” USD sits inside the field just to the right of the typed amount. The dollar sign stays on the left. | — |

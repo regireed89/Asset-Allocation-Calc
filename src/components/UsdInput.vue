@@ -44,12 +44,13 @@ function onBlur() {
   focused.value = false
 }
 
-const { input, fontSize } = useFitText(shown, 48, 24)
+const visible = computed(() => shown.value || '0.00')
+const { input, fontSize, width } = useFitText(visible, 48, 24, 120)
 </script>
 
 <template>
   <div class="usd-input">
-    <label class="pill" for="usd">USD</label>
+    <label class="amount-label" for="usd">Amount to allocate</label>
     <div class="field">
       <span class="prefix" :style="{ fontSize: `${Math.round(fontSize * 0.8)}px` }" aria-hidden="true">$</span>
       <input
@@ -69,6 +70,7 @@ const { input, fontSize } = useFitText(shown, 48, 24)
         :aria-invalid="message ? true : undefined"
         aria-describedby="usd-error"
       />
+      <span class="usd-code" :style="{ left: `calc(50% + ${width / 2}px + 12px)` }">USD</span>
       <p id="usd-error" class="error" role="alert" v-show="message">
         {{ message }}
       </p>

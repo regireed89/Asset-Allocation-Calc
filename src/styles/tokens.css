@@ -88,15 +88,10 @@ body {
   width: 100%;
 }
 
-.pill {
-  display: inline-block;
-  font-size: 24px;
+.amount-label {
+  font-size: 22px;
   font-weight: 600;
-  letter-spacing: 0.08em;
-  color: var(--text-on-accent);
-  background: var(--accent);
-  border-radius: 12px;
-  padding: 8px 24px;
+  color: var(--text);
 }
 
 .field {
@@ -118,6 +113,19 @@ body {
   align-items: center;
   font-size: 40px;
   font-weight: 600;
+  color: var(--text-muted);
+  pointer-events: none;
+}
+
+.usd-code {
+  position: absolute;
+  top: 0;
+  height: 136px;
+  display: flex;
+  align-items: center;
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
   color: var(--text-muted);
   pointer-events: none;
 }
@@ -496,7 +504,7 @@ input.invalid:focus-visible {
     gap: 16px;
   }
 
-  .pill {
+  .amount-label {
     font-size: 18px;
   }
 
@@ -504,6 +512,11 @@ input.invalid:focus-visible {
     left: 16px;
     height: 96px;
     font-size: 28px;
+  }
+
+  .usd-code {
+    height: 96px;
+    font-size: 16px;
   }
 
   .field input {
