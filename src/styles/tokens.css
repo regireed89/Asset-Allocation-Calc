@@ -450,10 +450,6 @@ input.invalid:focus-visible {
   color: var(--text-muted);
 }
 
-.refresh-status-error {
-  color: var(--error);
-}
-
 @media (max-width: 640px) {
   .page {
     gap: 20px;

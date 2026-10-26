@@ -19,21 +19,26 @@ const rates = ref(null);
 const rateError = ref("");
 const usingStoredRates = ref(false);
 const lastUpdated = ref(0);
-const refreshFailedAt = ref(0);
 const refreshing = ref(false);
 
-async function pullRates(fromButton) {
+async function pullRates() {
   if (refreshing.value) return;
   refreshing.value = true;
   try {
     const result = await loadExchangeRates();
-    rates.value = result.rates;
-    usingStoredRates.value = result.stale;
-    rateError.value = result.error?.message ?? "";
-    if (result.error) {
-      if (fromButton) refreshFailedAt.value = Date.now();
+    if (result.rates) rates.value = result.rates;
+    if (result.error && rates.value) {
+      usingStoredRates.value = true;
+      rateError.value = "";
       return;
     }
+    if (result.error) {
+      usingStoredRates.value = false;
+      rateError.value = "Could not load live prices. Try again.";
+      return;
+    }
+    usingStoredRates.value = false;
+    rateError.value = "";
     lastUpdated.value = Date.now();
   } finally {
     refreshing.value = false;
@@ -51,8 +56,8 @@ watch(
   [shares, rates],
   () => {
     if (!rates.value) {
-      btc.value = "0";
-      eth.value = "0";
+      btc.value = "";
+      eth.value = "";
       return;
     }
     btc.value = coinAmount(shares.value.btc, rates.value.btc);
@@ -63,8 +68,6 @@ watch(
 
 function resetCard() {
   usd.value = "";
-  btc.value = "0";
-  eth.value = "0";
   btcPercent.value = "70";
 }
 
@@ -86,7 +89,8 @@ onMounted(() => {
           label="BTC"
           v-model="btc"
           readonly
-          :dollars="formatAmount(shares.btc)"
+          :placeholder="rates ? '0.00' : rateError ? '' : 'Loading'"
+          :dollars="rates ? formatAmount(shares.btc) : ''"
           :price="priceText(rates?.btc)"
         />
         <AmountField
@@ -94,7 +98,8 @@ onMounted(() => {
           label="ETH"
           v-model="eth"
           readonly
-          :dollars="formatAmount(shares.eth)"
+          :placeholder="rates ? '0.00' : rateError ? '' : 'Loading'"
+          :dollars="rates ? formatAmount(shares.eth) : ''"
           :price="priceText(rates?.eth)"
         />
       </div>
@@ -107,9 +112,8 @@ onMounted(() => {
     </div>
     <RefreshRates
       :updated-at="lastUpdated"
-      :failed-at="refreshFailedAt"
       :busy="refreshing"
-      @refresh="pullRates(true)"
+      @refresh="pullRates"
     />
   </div>
 </template>

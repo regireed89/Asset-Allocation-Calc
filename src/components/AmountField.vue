@@ -17,9 +17,12 @@ const value = defineModel({ default: '' })
 
 const invalid = computed(() => !isValid(value.value))
 const errorId = computed(() => `${props.id}-error`)
-const shown = computed(() =>
-  props.readonly ? formatAmount(value.value, props.label) : value.value,
-)
+const shown = computed(() => {
+  if (!props.readonly) return value.value
+  if (value.value === '') return ''
+  return formatAmount(value.value, props.label)
+})
+const fitted = computed(() => shown.value || props.placeholder)
 const describedBy = computed(() => {
   const ids = [errorId.value]
   if (props.dollars) ids.push(`${props.id}-dollars`)
@@ -48,7 +51,7 @@ function onInput(event) {
   if (event.target.value !== next) event.target.value = next
 }
 
-const { input, fontSize } = useFitText(shown, 56, 18)
+const { input, fontSize } = useFitText(fitted, 56, 18)
 </script>
 
 <template>

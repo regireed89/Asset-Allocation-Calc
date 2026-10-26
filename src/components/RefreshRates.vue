@@ -3,40 +3,29 @@ import { computed, onMounted, onUnmounted, ref, watch } from 'vue'
 
 const props = defineProps({
   updatedAt: { type: Number, default: 0 },
-  failedAt: { type: Number, default: 0 },
   busy: { type: Boolean, default: false },
 })
 
 const emit = defineEmits(['refresh'])
 
 const now = ref(Date.now())
-const showError = ref(false)
 let clock
-let errorTimer
 
 const minutesAgo = computed(() => {
   if (!props.updatedAt) return null
   return Math.max(0, Math.floor((now.value - props.updatedAt) / 60000))
 })
 
-watch(
-  () => props.failedAt,
-  (value) => {
-    if (!value) return
-    showError.value = true
-    clearTimeout(errorTimer)
-    errorTimer = setTimeout(() => {
-      showError.value = false
-    }, 3000)
-  },
-)
+const stamp = computed(() => {
+  if (minutesAgo.value === null) return ''
+  if (minutesAgo.value === 0) return 'Updated just now, may be stale'
+  return `Updated ${minutesAgo.value} min ago, may be stale`
+})
 
 watch(
   () => props.updatedAt,
   (value) => {
     if (value) now.value = value
-    showError.value = false
-    clearTimeout(errorTimer)
   },
 )
 
@@ -48,7 +37,6 @@ onMounted(() => {
 
 onUnmounted(() => {
   clearInterval(clock)
-  clearTimeout(errorTimer)
 })
 </script>
 
@@ -57,11 +45,6 @@ onUnmounted(() => {
     <button type="button" class="refresh-button" :disabled="busy" @click="emit('refresh')">
       Refresh Rates
     </button>
-    <p v-if="showError" class="refresh-status refresh-status-error" role="alert">
-      Error refreshing rates
-    </p>
-    <p v-else-if="minutesAgo !== null" class="refresh-status">
-      Last updated {{ minutesAgo }} minutes ago
-    </p>
+    <p v-if="stamp" class="refresh-status">{{ stamp }}</p>
   </div>
 </template>
