@@ -19,7 +19,7 @@ const sliderValue = computed(() => {
 
 const sliderPosition = computed(() => {
   const ratio = sliderValue.value / 100
-  return `calc(${ratio} * (100% - 52px) + 26px)`
+  return `calc(${ratio} * (100% - 36px) + 18px)`
 })
 
 function onInput(event) {

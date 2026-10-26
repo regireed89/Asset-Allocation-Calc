@@ -147,7 +147,7 @@ body {
 
 .slider-value {
   position: absolute;
-  top: 74px;
+  top: 66px;
   transform: translateX(-50%);
   font-size: 24px;
   font-weight: 600;
@@ -185,13 +185,13 @@ body {
   -webkit-appearance: none;
   appearance: none;
   box-sizing: border-box;
-  width: 52px;
-  height: 52px;
-  margin-top: -20px;
+  width: 36px;
+  height: 36px;
+  margin-top: -12px;
   border-radius: 50%;
   background: var(--accent);
-  border: none;
-  box-shadow: none;
+  border: 2px solid var(--text-on-accent);
+  box-shadow: 0 2px 4px rgba(31, 58, 51, 0.28);
 }
 
 .slider::-moz-range-track {
@@ -203,12 +203,12 @@ body {
 
 .slider::-moz-range-thumb {
   box-sizing: border-box;
-  width: 52px;
-  height: 52px;
+  width: 36px;
+  height: 36px;
   border-radius: 50%;
   background: var(--accent);
-  border: none;
-  box-shadow: none;
+  border: 2px solid var(--text-on-accent);
+  box-shadow: 0 2px 4px rgba(31, 58, 51, 0.28);
 }
 
 .scale {
