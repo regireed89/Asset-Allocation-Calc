@@ -18,7 +18,6 @@ Tests stay in `test/logic.test.js` and run with `npm test`, which is Node's buil
 
 `SliderCard.vue` uses double quotes and semicolons. Other files use single quotes and no semicolons. Keep that split. `defineModel` is already in use. Keep it only where it can be explained.
 
-Do not copy code, file names, or the sample structure from the hiring-manager guide. That guide is a checklist of behavior, not a template.
 
 ## How the page works
 
