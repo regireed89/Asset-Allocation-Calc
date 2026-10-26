@@ -142,6 +142,8 @@ body {
   font-weight: 700;
   font-variant-numeric: tabular-nums;
   padding: 0 88px;
+  overflow: hidden;
+  text-overflow: ellipsis;
   border-radius: 28px;
   background: var(--bg-input);
   border: 2px solid var(--border-input);
@@ -325,6 +327,8 @@ body {
   font-size: 56px;
   font-weight: 700;
   font-variant-numeric: tabular-nums;
+  overflow: hidden;
+  text-overflow: ellipsis;
   border: none;
   border-radius: 0;
   background: transparent;
@@ -372,7 +376,11 @@ input.invalid:focus-visible {
 
 .coin-dollars,
 .coin-price {
+  max-width: 100%;
   margin: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
   color: var(--text-on-accent);
 }
 

@@ -51,7 +51,7 @@ function onInput(event) {
   if (event.target.value !== next) event.target.value = next
 }
 
-const { input, fontSize } = useFitText(fitted, 56, 18)
+const { input, fontSize } = useFitText(fitted, 56, 8)
 </script>
 
 <template>
@@ -70,11 +70,11 @@ const { input, fontSize } = useFitText(fitted, 56, 18)
       @input="onInput"
       :placeholder="placeholder"
       :class="{ invalid }"
-      :aria-invalid="invalid"
+      :aria-invalid="!readonly && invalid ? true : undefined"
       :aria-describedby="describedBy"
     />
     <p v-if="dollars" :id="`${id}-dollars`" class="coin-dollars">${{ dollars }}</p>
     <p v-if="price" :id="`${id}-price`" class="coin-price">${{ price }} each</p>
-    <p :id="errorId" class="error" role="alert" v-show="invalid">Enter a valid amount</p>
+    <p :id="errorId" class="error" role="alert" v-show="!readonly && invalid">Enter a valid amount</p>
   </div>
 </template>

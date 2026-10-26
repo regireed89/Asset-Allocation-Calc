@@ -1,8 +1,8 @@
 <script setup>
-import { computed, nextTick, ref } from 'vue'
+import { computed, nextTick, ref, watch } from 'vue'
 import { useFitText } from '../utils/fitText'
 import { formatAmount } from '../utils/format'
-import { blockedKeyMessage, numericText, usdNotice } from '../utils/validation'
+import { blockedKeyMessage, limitUsdDigits, numericText, usdNotice, usdSizeMessage } from '../utils/validation'
 
 const value = defineModel({ default: '' })
 const focused = ref(false)
@@ -20,22 +20,31 @@ function onBeforeInput(event) {
   const start = el.selectionStart ?? 0
   const end = el.selectionEnd ?? 0
   const rawNext = el.value.slice(0, start) + event.data + el.value.slice(end)
-  const next = numericText(rawNext)
-  if (next === rawNext) {
-    blocked.value = ''
+  const digits = numericText(rawNext)
+  if (digits !== rawNext) {
+    event.preventDefault()
+    blocked.value = blockedKeyMessage(event.data)
+    const caret = numericText(el.value.slice(0, start) + event.data).length
+    const next = limitUsdDigits(digits)
+    if (next !== el.value) value.value = next
+    nextTick(() => el.setSelectionRange(caret, caret))
     return
   }
-  event.preventDefault()
-  blocked.value = blockedKeyMessage(event.data)
-  const caret = numericText(el.value.slice(0, start) + event.data).length
-  if (next !== el.value) value.value = next
-  nextTick(() => el.setSelectionRange(caret, caret))
+  if (limitUsdDigits(digits) !== digits) {
+    event.preventDefault()
+    blocked.value = usdSizeMessage
+    return
+  }
+  blocked.value = ''
 }
 
 function onInput(event) {
   const raw = event.target.value
-  const next = numericText(raw)
-  blocked.value = next === raw ? '' : blockedKeyMessage(raw)
+  const digits = numericText(raw)
+  const next = limitUsdDigits(digits)
+  if (digits !== raw) blocked.value = blockedKeyMessage(raw)
+  else if (next !== digits) blocked.value = usdSizeMessage
+  else blocked.value = ''
   value.value = next
   if (event.target.value !== next) event.target.value = next
 }
@@ -44,8 +53,12 @@ function onBlur() {
   focused.value = false
 }
 
+watch(value, (next) => {
+  if (next === '') blocked.value = ''
+})
+
 const visible = computed(() => shown.value || '0.00')
-const { input, fontSize, width } = useFitText(visible, 48, 24, 120)
+const { input, fontSize, width } = useFitText(visible, 48, 8, 120)
 </script>
 
 <template>
@@ -70,7 +83,7 @@ const { input, fontSize, width } = useFitText(visible, 48, 24, 120)
         :aria-invalid="message ? true : undefined"
         aria-describedby="usd-error"
       />
-      <span class="usd-code" :style="{ left: `calc(50% + ${width / 2}px + 12px)` }">USD</span>
+      <span class="usd-code" :style="{ left: `min(calc(50% + ${width / 2}px + 12px), calc(100% - 72px))` }">USD</span>
       <p id="usd-error" class="error" role="alert" v-show="message">
         {{ message }}
       </p>

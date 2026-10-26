@@ -2,7 +2,7 @@ import assert from 'node:assert/strict'
 import { test } from 'node:test'
 import { coinAmount, splitUsd } from '../src/utils/coinAmount.js'
 import { formatAmount } from '../src/utils/format.js'
-import { blockedKeyMessage, numericText, usdNotice } from '../src/utils/validation.js'
+import { blockedKeyMessage, limitUsdDigits, numericText, usdNotice } from '../src/utils/validation.js'
 
 test('USD text keeps digits and one decimal point', () => {
   assert.equal(numericText('12a.3.4$'), '12.34')
@@ -11,6 +11,8 @@ test('USD text keeps digits and one decimal point', () => {
   assert.equal(numericText('-5'), '5')
   assert.equal(blockedKeyMessage('-5'), 'Amounts cannot be negative.')
   assert.equal(blockedKeyMessage('a'), 'Use digits and one decimal point.')
+  assert.equal(limitUsdDigits('1234567890123.5'), '123456789012.5')
+  assert.equal(limitUsdDigits('123456789012.5'), '123456789012.5')
 })
 
 test('an empty USD amount is quiet and zero asks for more', () => {
@@ -19,6 +21,8 @@ test('an empty USD amount is quiet and zero asks for more', () => {
   assert.equal(usdNotice('10.50'), '')
   assert.equal(usdNotice('10.'), '')
   assert.equal(usdNotice('0.001'), '')
+  assert.equal(usdNotice('123456789012'), '')
+  assert.equal(usdNotice('1234567890123'), 'Use at most 12 digits before the decimal.')
   assert.equal(usdNotice('.'), 'Enter a number.')
   assert.equal(formatAmount('0.001'), '0.001')
   assert.equal(formatAmount('10.50'), '10.50')
@@ -37,6 +41,7 @@ test('ETH dollars are what is left after BTC', () => {
 test('an empty amount or a missing rate buys no coin', () => {
   assert.deepEqual(splitUsd('', 70), { btc: 0, eth: 0 })
   assert.equal(coinAmount(70, undefined), '0')
+  assert.equal(coinAmount('1e21', 1), '0')
 })
 
 test('a coin amount uses fewer decimals as it grows', () => {

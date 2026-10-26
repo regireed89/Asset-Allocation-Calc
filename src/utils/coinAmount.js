@@ -16,8 +16,10 @@ export function coinAmount(usdShare, rate) {
   if (!Number.isFinite(share) || !Number.isFinite(unitRate)) return '0'
   const amount = share * unitRate
   if (!Number.isFinite(amount) || amount === 0) return '0'
-  const text = amount.toFixed(8).replace(/\.?0+$/, '')
-  return text === '' ? '0' : text
+  const text = amount.toFixed(8)
+  if (text.includes('e')) return '0'
+  const plain = text.replace(/\.?0+$/, '')
+  return plain === '' ? '0' : plain
 }
 
 export function coinPrice(rate) {

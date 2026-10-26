@@ -23,7 +23,7 @@ Do not copy code, file names, or the sample structure from the hiring-manager gu
 ## How the page works
 
 - Styles live in `src/styles/tokens.css`. Do not add `<style>` blocks. Use the color variables already there. The page background is `src/assets/market-chart.svg`: sage page, accent green for up candles, error red for down candles. The card keeps a solid fill.
-- `UsdInput` keeps the typed string. Digits and one decimal point only. Empty stays empty and shows no message. `0` stays `0` and asks for an amount greater than zero. A letter or a minus sign is blocked and gets a short message. Leaving the field does not change what was typed. `0.001` stays visible.
+- `UsdInput` keeps the typed string. Digits and one decimal point only, with at most 12 digits before the decimal. Empty stays empty and shows no message. `0` stays `0` and asks for an amount greater than zero. A letter, a minus sign, or a 13th digit before the decimal is blocked and gets a short message. Leaving the field does not change what was typed. `0.001` stays visible. The amount, USD, and the coin lines stay inside their boxes.
 - The slider is the BTC share and starts at 70. The number under the thumb is that share. The ends read `0%` and `100%`. ETH is 100 minus the BTC share.
 - A circle sits just under the slider, in the same group, so the card's large gap does not separate them. The center is open: BTC and ETH, with each percentage under its name. The circle follows the slider.
 - BTC and ETH are read-only cards. The title sits above the amount. The coin amount is the largest number. Under it, the dollar share, then the price of one coin. The card fades from dark green to lighter green, with white text. A coin amount uses fewer decimals as it grows.
