@@ -31,17 +31,18 @@ const describedBy = computed(() => {
 })
 
 function onBeforeInput(event) {
-  if (props.readonly || event.data == null) return
-  const el = event.target
-  const start = el.selectionStart ?? 0
-  const end = el.selectionEnd ?? 0
-  const rawNext = el.value.slice(0, start) + event.data + el.value.slice(end)
-  const next = numericText(rawNext)
-  if (next === rawNext) return
+  const typed = event.data
+  if (props.readonly || typed == null) return
+  const field = event.target
+  const start = field.selectionStart ?? 0
+  const end = field.selectionEnd ?? 0
+  const nextText = field.value.slice(0, start) + typed + field.value.slice(end)
+  const digits = numericText(nextText)
+  if (digits === nextText) return
   event.preventDefault()
-  const caret = numericText(el.value.slice(0, start) + event.data).length
-  if (next !== el.value) value.value = next
-  nextTick(() => el.setSelectionRange(caret, caret))
+  const cursor = numericText(field.value.slice(0, start) + typed).length
+  if (digits !== field.value) value.value = digits
+  nextTick(() => field.setSelectionRange(cursor, cursor))
 }
 
 function onInput(event) {
@@ -51,7 +52,9 @@ function onInput(event) {
   if (event.target.value !== next) event.target.value = next
 }
 
-const { input, fontSize } = useFitText(fitted, 56, 8)
+const largestType = 56
+const smallestType = 8
+const { input, fontSize } = useFitText(fitted, largestType, smallestType)
 </script>
 
 <template>

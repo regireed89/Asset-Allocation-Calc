@@ -54,3 +54,4 @@ One coding agent. No subagents. Add a row when a prompt changes the project. Nam
 | Also set the divider in the graph at the top and not on the side. | Grok 4.7. The split between BTC and ETH starts at the top of the ring. | — |
 | Flip the direction the graph moves. | Grok 4.7. The ring now grows the other way from the top. BTC still starts dark and ETH stays the pale section. | — |
 | Any updates to README.md and AGENTS.md. | Grok 4.7. Both files now describe the pale glow behind the card, the circle meeting at the top, the dark BTC fade, and the lighter ETH section on the right. | — |
+| Update any code that does not read like plain English. | Grok 4.7. The digit check, the coin text, the dollar formatting, and the rate load are straight steps. Names use the words already on the page. | — |

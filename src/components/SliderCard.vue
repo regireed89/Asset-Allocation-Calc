@@ -59,18 +59,23 @@ function spokenCoin(name, amount, dollars, each) {
 }
 
 const spokenResults = computed(() => {
-  if (!rates.value) return rateError.value ? "" : "Loading prices.";
-  return `${spokenCoin(
+  if (!rates.value) {
+    if (rateError.value) return "";
+    return "Loading prices.";
+  }
+  const btcLine = spokenCoin(
     "BTC",
     formatAmount(btc.value, "BTC"),
     formatAmount(shares.value.btc),
     priceText(rates.value.btc),
-  )}. ${spokenCoin(
+  );
+  const ethLine = spokenCoin(
     "ETH",
     formatAmount(eth.value, "ETH"),
     formatAmount(shares.value.eth),
     priceText(rates.value.eth),
-  )}.`;
+  );
+  return `${btcLine}. ${ethLine}.`;
 });
 
 watch(
@@ -93,7 +98,7 @@ function resetCard() {
 }
 
 onMounted(() => {
-  pullRates(false);
+  pullRates();
 });
 </script>
 

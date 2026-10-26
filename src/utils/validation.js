@@ -1,7 +1,22 @@
-export const NUMERIC = /^(\d+\.?\d*|\.\d+)$/
+function digitsAndOneDecimal(value) {
+  let digitCount = 0
+  let sawDecimal = false
+  for (const char of String(value)) {
+    if (char >= '0' && char <= '9') {
+      digitCount += 1
+      continue
+    }
+    if (char === '.' && !sawDecimal) {
+      sawDecimal = true
+      continue
+    }
+    return false
+  }
+  return digitCount > 0
+}
 
-export function isValid(v) {
-  return v === '' || NUMERIC.test(v)
+export function isValid(value) {
+  return value === '' || digitsAndOneDecimal(value)
 }
 
 export function numericText(value) {

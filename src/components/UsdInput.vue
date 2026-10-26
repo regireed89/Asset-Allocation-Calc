@@ -15,19 +15,20 @@ const shown = computed(() => {
 })
 
 function onBeforeInput(event) {
-  if (event.data == null) return
-  const el = event.target
-  const start = el.selectionStart ?? 0
-  const end = el.selectionEnd ?? 0
-  const rawNext = el.value.slice(0, start) + event.data + el.value.slice(end)
-  const digits = numericText(rawNext)
-  if (digits !== rawNext) {
+  const typed = event.data
+  if (typed == null) return
+  const field = event.target
+  const start = field.selectionStart ?? 0
+  const end = field.selectionEnd ?? 0
+  const nextText = field.value.slice(0, start) + typed + field.value.slice(end)
+  const digits = numericText(nextText)
+  if (digits !== nextText) {
     event.preventDefault()
-    blocked.value = blockedKeyMessage(event.data)
-    const caret = numericText(el.value.slice(0, start) + event.data).length
+    blocked.value = blockedKeyMessage(typed)
+    const cursor = numericText(field.value.slice(0, start) + typed).length
     const next = limitUsdDigits(digits)
-    if (next !== el.value) value.value = next
-    nextTick(() => el.setSelectionRange(caret, caret))
+    if (next !== field.value) value.value = next
+    nextTick(() => field.setSelectionRange(cursor, cursor))
     return
   }
   if (limitUsdDigits(digits) !== digits) {
@@ -58,7 +59,10 @@ watch(value, (next) => {
 })
 
 const visible = computed(() => shown.value || '0.00')
-const { input, fontSize, width } = useFitText(visible, 48, 8, 120)
+const largestType = 48
+const smallestType = 8
+const roomForUsd = 120
+const { input, fontSize, width } = useFitText(visible, largestType, smallestType, roomForUsd)
 </script>
 
 <template>

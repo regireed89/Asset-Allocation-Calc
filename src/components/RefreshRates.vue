@@ -11,9 +11,12 @@ const emit = defineEmits(['refresh'])
 const now = ref(Date.now())
 let clock
 
+const oneMinute = 60 * 1000
+
 const minutesAgo = computed(() => {
   if (!props.updatedAt) return null
-  return Math.max(0, Math.floor((now.value - props.updatedAt) / 60000))
+  const elapsed = now.value - props.updatedAt
+  return Math.max(0, Math.floor(elapsed / oneMinute))
 })
 
 const stamp = computed(() => {
@@ -30,9 +33,10 @@ watch(
 )
 
 onMounted(() => {
+  const tick = 15 * 1000
   clock = setInterval(() => {
     now.value = Date.now()
-  }, 15000)
+  }, tick)
 })
 
 onUnmounted(() => {

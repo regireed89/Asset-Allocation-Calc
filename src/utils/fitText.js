@@ -1,27 +1,27 @@
 import { nextTick, onMounted, onUnmounted, ref, watch } from 'vue'
 
-let probe
+let ruler
 
 function textWidth(text, source, fontSize) {
-  if (!probe) {
-    probe = document.createElement('span')
-    probe.style.position = 'fixed'
-    probe.style.top = '0'
-    probe.style.left = '0'
-    probe.style.visibility = 'hidden'
-    probe.style.whiteSpace = 'nowrap'
-    probe.style.pointerEvents = 'none'
-    document.body.appendChild(probe)
+  if (!ruler) {
+    ruler = document.createElement('span')
+    ruler.style.position = 'fixed'
+    ruler.style.top = '0'
+    ruler.style.left = '0'
+    ruler.style.visibility = 'hidden'
+    ruler.style.whiteSpace = 'nowrap'
+    ruler.style.pointerEvents = 'none'
+    document.body.appendChild(ruler)
   }
 
   const style = getComputedStyle(source)
-  probe.style.fontFamily = style.fontFamily
-  probe.style.fontWeight = style.fontWeight
-  probe.style.fontVariantNumeric = style.fontVariantNumeric
-  probe.style.letterSpacing = style.letterSpacing
-  probe.style.fontSize = `${fontSize}px`
-  probe.textContent = text === '' ? '0' : text
-  return probe.offsetWidth
+  ruler.style.fontFamily = style.fontFamily
+  ruler.style.fontWeight = style.fontWeight
+  ruler.style.fontVariantNumeric = style.fontVariantNumeric
+  ruler.style.letterSpacing = style.letterSpacing
+  ruler.style.fontSize = `${fontSize}px`
+  ruler.textContent = text === '' ? '0' : text
+  return ruler.offsetWidth
 }
 
 export function useFitText(text, max, min, reserve = 0) {
@@ -33,10 +33,10 @@ export function useFitText(text, max, min, reserve = 0) {
     const el = input.value
     if (!el) return
     const style = getComputedStyle(el)
-    const available =
-      el.clientWidth - parseFloat(style.paddingLeft) - parseFloat(style.paddingRight) - reserve - 4
+    const padding = parseFloat(style.paddingLeft) + parseFloat(style.paddingRight)
+    const room = el.clientWidth - padding - reserve - 4
     let size = max
-    while (size > min && textWidth(text.value, el, size) > available) size -= 1
+    while (size > min && textWidth(text.value, el, size) > room) size -= 1
     fontSize.value = size
     width.value = textWidth(text.value, el, size)
   }
