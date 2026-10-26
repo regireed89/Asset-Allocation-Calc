@@ -208,10 +208,16 @@ body {
 .scale {
   display: flex;
   justify-content: space-between;
-  margin-top: 28px;
+  margin-top: 1px;
   font-size: 24px;
   font-weight: 500;
   color: var(--text-muted);
+}
+
+.slider-graph {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
 }
 
 .circle-graph {
@@ -501,8 +507,12 @@ input.invalid:focus-visible {
   }
 
   .scale {
-    margin-top: 16px;
+    margin-top: 8px;
     font-size: 18px;
+  }
+
+  .slider-graph {
+    gap: 12px;
   }
 
   .circle-graph {

@@ -101,8 +101,10 @@ onMounted(() => {
   <div class="card">
     <ResetButton @reset="resetCard" />
     <UsdInput v-model="usd" />
-    <AmountSlider v-model="btcPercent" label="BTC percentage" step="1" />
-    <CircleGraph :btc-percent="btcPercent" />
+    <div class="slider-graph">
+      <AmountSlider v-model="btcPercent" label="BTC percentage" step="1" />
+      <CircleGraph :btc-percent="btcPercent" />
+    </div>
     <div class="results">
       <p class="visually-hidden" aria-live="polite">{{ spokenResults }}</p>
       <div class="row">
