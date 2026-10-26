@@ -1,0 +1,32 @@
+# AI logs
+
+One coding agent. No subagents. Add a row when a prompt changes the project. Name the model when it is known.
+
+## Done
+
+| Prompt | Response | Your changes |
+| --- | --- | --- |
+| Build the Vue 3 card as separate components: tokens, validation, USD input, slider, BTC/ETH fields, and a demo with a valid card and an error card. | Added those files. Vue 3.5, so `defineModel` was used. The entry was `main.ts` because the request named that file. | — |
+| Do not show the error card. Error timing comes later. | Removed the second card. | — |
+| Move all styling into `src/styles/tokens.css`. | Moved component and page CSS there. Removed `<style>` blocks and `src/style.css`. | — |
+| Why is `main` TypeScript? | The first request named `main.ts`. The file itself was plain JavaScript. The project had started as `main.js`. | — |
+| Use one language everywhere. | Converted the entry, validation helper, and Vue scripts to JavaScript. | You had edited `SliderCard.vue` to double quotes, semicolons, and a USD default of `"0"`. |
+| Split USD between BTC and ETH, starting 70/30. The slider is the BTC share. Amounts start at 0. Do not open a browser. Fetch BTC and ETH rates from Coinbase, store them, and if either rate fails use the saved rates and show a note. | Slider is the BTC percent (starts at 70). Coin amounts come from the stored or fresh rate. The note reads: “Current results may be using the previous rates.” | — |
+| Simplify the rate code to one function. | Replaced the helpers with `loadExchangeRates`. | — |
+| Show the slider’s current value under the thumb. | The number sits under the thumb and moves with it. 0 and 100 stay at the ends. | — |
+| Add currency formatting to the amounts. | USD shows two decimals and thousands separators after you leave the field. BTC and ETH use grouping and up to eight decimals. | — |
+| Decrease the input text so it fits the field. | Smaller USD, dollar sign, BTC, and ETH type. Longer amounts shrink further so they stay inside the field. | — |
+| Add the title “Asset allocation calculator” at the center top of the page. | Added a centered heading at the top. The card sits below it. | — |
+| The page is too big and shows a scrollbar. Make the card or page smaller. | Tried a smaller card. You asked to undo it because the scrollbar was still there, so the previous size is restored. | — |
+| Why is there a scrollbar and white space at the bottom? | The card stack is 904px, so a shorter window scrolls. The white strip is the default page background: sage is only on `.page`, and a hidden measuring span sat below it. | — |
+| Do not allow characters to be typed in the input. | Digits and one decimal point stay. Letters and other characters are dropped before they appear. | — |
+| Give the page more contrast and make the card the focus with a slight green border. | The card border is a soft green (`#6d9b86`) so the card stands out from the page. | — |
+| Remove the white border around the slider knob and make the knob more matte. | The knob is a flat accent circle. The card-colored ring and drop shadow are gone. | — |
+| Add a Refresh Data button at the bottom middle of the card. Show minutes since the last pull, and a brief red error if the pull fails. | The button calls the same rate load. “Last updated # minutes ago” sits under it. “Error refreshing rates” replaces that line for 3 seconds. | — |
+| Change Refresh Data to Refresh Rates. | The button label is now Refresh Rates. | — |
+| Make the refresh button its own component. | Moved the button, minute stamp, and brief error into `RefreshRates.vue`. The card still loads the rates. | — |
+| Add a reset button at the top right, half the size of Refresh Rates. Both buttons use the slider’s dark green with white lettering. | `ResetButton.vue` sets USD to 0 and the split back to 70/30. Both buttons use the accent green and white text. | — |
+| Take the BTC and ETH results out of the input boxes. Undo that. | The amounts are back in the BTC and ETH fields. `AmountField.vue` is restored. | — |
+| Make the amount fields cards with a smaller corner radius, a dark-to-light green fade, and white text. Titles stay above the amounts. | BTC and ETH are gradient cards. The title and amount are white text on each card. | — |
+| Redo `AGENTS.md` as project instructions. Move the old log into a separate file. | Instructions are in `AGENTS.md`. This history is `AI-logs.md`. | — |
+| The brief and the hiring-manager guide are attached. Explain the components, the math, and the CSS. Do not copy the guide’s code. No study comments. Keep this log. | `AGENTS.md` now states the assessment goals in our own words. The guide’s sample code is not in the repo. | — |
