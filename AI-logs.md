@@ -54,3 +54,4 @@ One coding agent. No subagents. Add a row when a prompt changes the project. Nam
 | Make the difference in the circle colors more obvious. ETH should be much lighter. | Grok 4.7. BTC stays the dark green. ETH now fades from the pale track green to the pill green. | — |
 | Also set the divider in the graph at the top and not on the side. | Grok 4.7. The split between BTC and ETH starts at the top of the ring. | — |
 | Flip the direction the graph moves. | Grok 4.7. The ring now grows the other way from the top. BTC still starts dark and ETH stays the pale section. | — |
+| Any updates to README.md and AGENTS.md. | Grok 4.7. Both files now describe the pale glow behind the card, the circle meeting at the top, the dark BTC fade, and the lighter ETH section on the right. | — |
