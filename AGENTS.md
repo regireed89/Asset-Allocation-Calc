@@ -30,7 +30,7 @@ Do not copy code, file names, or the sample structure from the hiring-manager gu
 - The USD label, Reset, and Refresh Rates use the coin cards' corner radius, white text, and a flat green. The coin cards keep the fade.
 - `RefreshRates` reloads the rates. A failed refresh keeps the last good pair and says the results may be using previous rates. `ResetButton` sets USD back to 0 and the split back to 70/30.
 - When field errors should appear is not decided yet. Do not invent that timing.
-- The layout should stay usable on a phone. Do not hide the slider to make it fit.
+- The layout should stay usable on a phone. Do not hide the slider to make it fit. Below 640px the card tightens, the coin cards stack, and the slider stays visible.
 - Labels point at their fields. A keyboard user can reach the slider and both buttons.
 
 ## Rates

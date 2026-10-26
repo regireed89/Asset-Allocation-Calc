@@ -118,6 +118,7 @@ body {
 .field input {
   align-self: stretch;
   width: 100%;
+  min-width: 0;
   height: 136px;
   box-sizing: border-box;
   text-align: center;
@@ -435,4 +436,93 @@ input.invalid:focus-visible {
 
 .refresh-status-error {
   color: var(--error);
+}
+
+@media (max-width: 640px) {
+  .page {
+    gap: 20px;
+    padding: 24px 16px 16px;
+  }
+
+  .title {
+    font-size: 28px;
+  }
+
+  .card {
+    padding: 64px 20px 28px;
+    gap: 28px;
+    border-radius: 28px;
+  }
+
+  .row {
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .pill {
+    font-size: 18px;
+  }
+
+  .prefix {
+    left: 16px;
+    height: 96px;
+    font-size: 28px;
+  }
+
+  .field input {
+    height: 96px;
+    padding: 0 44px;
+    border-radius: 20px;
+  }
+
+  .scale {
+    margin-top: 16px;
+    font-size: 18px;
+  }
+
+  .circle-graph {
+    width: 200px;
+  }
+
+  .circle-graph-center {
+    gap: 10px;
+  }
+
+  .circle-graph-name {
+    font-size: 15px;
+  }
+
+  .circle-graph-percent {
+    font-size: 18px;
+  }
+
+  .circle-graph-divider {
+    font-size: 22px;
+  }
+
+  .amount-field {
+    padding: 20px 16px;
+  }
+
+  .label {
+    font-size: 18px;
+  }
+
+  .error,
+  .rate-note {
+    font-size: 16px;
+  }
+
+  .field .error {
+    white-space: normal;
+    text-align: center;
+  }
+
+  .reset-button {
+    top: 14px;
+    right: 14px;
+    min-height: 44px;
+    font-size: 14px;
+    padding: 10px 16px;
+  }
 }

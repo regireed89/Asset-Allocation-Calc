@@ -28,6 +28,8 @@ The page title is “Asset allocation calculator.” One card holds the controls
 
 The USD label, Reset, and Refresh Rates use the coin cards' rounded corners, in a flat green with white text.
 
+On a window narrower than 640px, the card padding tightens and BTC and ETH stack. The USD amount, the circle, and Reset stay readable. The slider stays on the page.
+
 Labels point at their fields. The slider and both buttons can be reached from the keyboard.
 
 ## Decisions
@@ -43,7 +45,6 @@ Labels point at their fields. The slider and both buttons can be reached from th
 ## Left out
 
 - When a field error should appear is not decided. The USD field and the amount fields already include an error message for a value that is not a valid number. An empty USD field is allowed.
-- The card uses the full width of a narrow screen, and the slider stays on the page. A separate phone layout was not added.
 - Component tests were left out.
 - The Vite starter files are still in the repo and are not part of the page: `src/components/HelloWorld.vue`, `src/style.css`, and the sample images in `src/assets`. The browser tab title in `index.html` is still `vite-scaffold`.
 
