@@ -49,7 +49,11 @@ function shareAmount(dollars, percent, rate) {
   const usdAmount = Number(dollars);
   const share = Number(percent);
   const unitRate = Number(rate);
-  if (!Number.isFinite(usdAmount) || !Number.isFinite(share) || !Number.isFinite(unitRate)) {
+  if (
+    !Number.isFinite(usdAmount) ||
+    !Number.isFinite(share) ||
+    !Number.isFinite(unitRate)
+  ) {
     return "0";
   }
   return formatAmount(usdAmount * (share / 100) * unitRate);
@@ -59,7 +63,9 @@ watch(
   [usd, btcPercent, rates],
   () => {
     const percent = Number(btcPercent.value);
-    const btcShare = Number.isFinite(percent) ? Math.min(100, Math.max(0, percent)) : 0;
+    const btcShare = Number.isFinite(percent)
+      ? Math.min(100, Math.max(0, percent))
+      : 0;
     btc.value = shareAmount(usd.value, btcShare, rates.value?.btc);
     eth.value = shareAmount(usd.value, 100 - btcShare, rates.value?.eth);
   },

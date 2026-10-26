@@ -11,6 +11,8 @@
   --placeholder: #5f736b;
   --accent: #2f7d6b;
   --text-on-accent: #ffffff;
+  --amount-card-top: #143f34;
+  --amount-card-bottom: #3f8f7c;
   --error: #b3261e;
   --error-strong: #c62828;
   --error-text: #8f1d1d;
@@ -37,7 +39,7 @@ body {
   margin: 0;
   width: 100%;
   text-align: center;
-  font-family: Inter, 'Helvetica Neue', Arial, sans-serif;
+  font-family: Inter, "Helvetica Neue", Arial, sans-serif;
   font-size: 40px;
   font-weight: 600;
   line-height: 1.2;
@@ -57,7 +59,7 @@ body {
   border-radius: 48px;
   box-shadow: 0 24px 64px rgba(31, 58, 51, 0.08);
   position: relative;
-  font-family: Inter, 'Helvetica Neue', Arial, sans-serif;
+  font-family: Inter, "Helvetica Neue", Arial, sans-serif;
   font-variant-numeric: tabular-nums;
 }
 
@@ -213,31 +215,36 @@ body {
 .amount-field {
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 12px;
   min-width: 0;
+  padding: 28px 32px;
+  border-radius: 12px;
+  background: linear-gradient(to bottom, var(--amount-card-top), var(--amount-card-bottom));
 }
 
 .label {
+  margin: 0;
   font-size: 24px;
   font-weight: 600;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: var(--text-muted);
+  color: var(--text-on-accent);
 }
 
 .amount-field input {
   width: 100%;
-  height: 96px;
+  height: auto;
   box-sizing: border-box;
-  padding: 0 28px;
+  padding: 0;
   font-family: inherit;
   font-size: 22px;
   font-weight: 600;
   font-variant-numeric: tabular-nums;
-  border-radius: 24px;
-  background: var(--bg-input);
-  border: 2px solid var(--border-input);
-  color: var(--text);
+  border: none;
+  border-radius: 0;
+  background: transparent;
+  color: var(--text-on-accent);
+  caret-color: var(--text-on-accent);
 }
 
 input::placeholder {
@@ -245,7 +252,7 @@ input::placeholder {
   opacity: 1;
 }
 
-input[type='text']:focus-visible {
+input[type="text"]:focus-visible {
   outline: none;
   border-color: var(--accent);
   box-shadow: 0 0 0 6px rgba(47, 125, 107, 0.22);
@@ -258,6 +265,24 @@ input.invalid:focus-visible {
   background: var(--error-bg);
   color: var(--error-text);
   box-shadow: 0 0 0 6px rgba(198, 40, 40, 0.16);
+}
+
+.amount-field input::placeholder {
+  color: var(--text-on-accent);
+  opacity: 0.75;
+}
+
+.amount-field input:focus-visible,
+.amount-field input.invalid,
+.amount-field input.invalid:focus-visible,
+.amount-field input[readonly] {
+  outline: none;
+  border: none;
+  background: transparent;
+  color: var(--text-on-accent);
+  -webkit-text-fill-color: var(--text-on-accent);
+  box-shadow: none;
+  opacity: 1;
 }
 
 .error {
