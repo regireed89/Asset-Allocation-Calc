@@ -12,6 +12,10 @@ JavaScript only. Vue files use `<script setup>`. No TypeScript and no new librar
 
 Prefer a straight function over a new layer. Name things with the words already on the page. Do not add comments for study. A separate study doc comes later.
 
+`coinAmount` is the split. The card calls it. Do not fold that formula back into the component.
+
+Tests stay in `test/logic.test.js` and run with `npm test`, which is Node's built-in runner. They cover the split, USD parsing, and coin formatting. Do not add a test library, component snapshots, or a larger suite. Local imports in files that Node loads need a `.js` extension. Vue imports stay as they are.
+
 `SliderCard.vue` uses double quotes and semicolons. Other files use single quotes and no semicolons. Keep that split. `defineModel` is already in use. Keep it only where it can be explained.
 
 Do not copy code, file names, or the sample structure from the hiring-manager guide. That guide is a checklist of behavior, not a template.
@@ -20,8 +24,9 @@ Do not copy code, file names, or the sample structure from the hiring-manager gu
 
 - Styles live in `src/styles/tokens.css`. Do not add `<style>` blocks. Use the color variables already there.
 - `UsdInput` keeps the typed string. Digits and one decimal point only. Empty and `0` stay different.
-- The slider is the BTC share and starts at 70. Both sides of the split are visible as text.
+- The slider is the BTC share and starts at 70. The number under the thumb is that share. ETH is 100 minus the BTC share.
 - BTC and ETH are read-only cards. The title sits above the amount. The card fades from dark green to lighter green, with white text. Those coin amounts are the main numbers.
+- The USD label, Reset, and Refresh Rates use the coin cards' corner radius, white text, and a flat green. The coin cards keep the fade.
 - `RefreshRates` reloads the rates. A failed refresh keeps the last good pair and says the results may be using previous rates. `ResetButton` sets USD back to 0 and the split back to 70/30.
 - When field errors should appear is not decided yet. Do not invent that timing.
 - The layout should stay usable on a phone. Do not hide the slider to make it fit.
@@ -33,6 +38,6 @@ Do not copy code, file names, or the sample structure from the hiring-manager gu
 
 ## After a change
 
-Load the page and use the control that changed. Do not commit unless asked.
+Load the page and use the control that changed. If the split, USD parsing, or coin formatting changed, run `npm test`. Do not commit unless asked.
 
 Add a row to `AI-logs.md` for each prompt. Record the prompt, what was produced, and any edit the author made.

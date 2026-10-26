@@ -25,6 +25,8 @@ The page title is “Asset allocation calculator.” One card holds the controls
 - **Refresh Rates.** Loads the rates again. Under the button, “Last updated # minutes ago” counts from the last successful pull. A failed refresh keeps the last good pair, and the card says “Current results may be using the previous rates.” A failed button press also shows “Error refreshing rates” for 3 seconds.
 - **Reset.** Sets the USD amount back to 0 and the split back to 70/30.
 
+The USD label, Reset, and Refresh Rates use the coin cards' rounded corners, in a flat green with white text.
+
 Labels point at their fields. The slider and both buttons can be reached from the keyboard.
 
 ## Decisions
@@ -33,17 +35,19 @@ Labels point at their fields. The slider and both buttons can be reached from th
 - `loadExchangeRates` is the only rate function. It reads `https://api.coinbase.com/v2/exchange-rates?currency=USD` and stores the BTC and ETH pair in `localStorage`. A later failed pull can reuse that pair. The page shows formatted coin amounts, not the raw rate.
 - Styles live in `src/styles/tokens.css`. Colors come from the variables at the top of that file.
 - `defineModel` connects the USD field, the slider, and the two coin amounts to the card.
+- `coinAmount` is the split: dollars × (share / 100) × rate. The card keeps the BTC share between 0 and 100 and gives ETH the rest. An empty amount or a missing rate is 0 coin.
 - BTC and ETH use grouping and up to eight decimal places. USD uses two decimal places after the field is left.
+- `npm test` uses Node's built-in test runner. The five tests in `test/logic.test.js` cover the split, USD parsing, and coin formatting. No test library was added.
 
 ## Left out
 
 - When a field error should appear is not decided. The USD field and the amount fields already include an error message for a value that is not a valid number. An empty USD field is allowed.
 - The card uses the full width of a narrow screen, and the slider stays on the page. A separate phone layout was not added.
-- `npm test` covers the split math, USD parsing, and coin formatting. Component tests were left out.
+- Component tests were left out.
 - The Vite starter files are still in the repo and are not part of the page: `src/components/HelloWorld.vue`, `src/style.css`, and the sample images in `src/assets`. The browser tab title in `index.html` is still `vite-scaffold`.
 
 ## Where AI was used
 
-A coding agent wrote most of this project from prompts: the components, the split math, the Coinbase request, the formatting, and the CSS. Each prompt is listed in `AI-logs.md`, with what the agent produced and any later edit.
+A coding agent wrote most of this project from prompts: the components, the split math, the Coinbase request, the formatting, the CSS, the flat green label and buttons, and the five logic tests. Each prompt is listed in `AI-logs.md`, with what the agent produced and any later edit.
 
 `SliderCard.vue` was edited by hand to use double quotes, semicolons, and a USD default of `"0"`. A change that made the card smaller was undone, because the page still scrolled.
