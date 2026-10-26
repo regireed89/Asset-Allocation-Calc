@@ -22,6 +22,7 @@
 
 body {
   margin: 0;
+  background: var(--bg-page);
 }
 
 .page {
@@ -33,7 +34,12 @@ body {
   justify-content: flex-start;
   gap: 32px;
   padding: 32px 24px 24px;
-  background: var(--bg-page);
+  background-color: var(--bg-page);
+  background-image: url('../assets/market-chart.svg');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  background-attachment: fixed;
 }
 
 .title {
