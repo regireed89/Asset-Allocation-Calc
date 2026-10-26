@@ -30,7 +30,7 @@ The USD label, Reset, and Refresh Rates use the coin cards' rounded corners, in 
 
 On a window narrower than 640px, the card padding tightens and BTC and ETH stack. The USD amount, the circle, and Reset stay readable. The slider stays on the page.
 
-Labels point at their fields. The slider and both buttons can be reached from the keyboard.
+Labels point at their fields. The slider and both buttons can be reached from the keyboard. A hidden line repeats the BTC and ETH results for a screen reader, and updates when those results change. The page stays in a light color scheme, so a dark system theme does not restyle the controls.
 
 ## Decisions
 

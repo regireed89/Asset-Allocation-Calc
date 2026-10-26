@@ -31,7 +31,7 @@ Do not copy code, file names, or the sample structure from the hiring-manager gu
 - `RefreshRates` reloads the rates. Until the first pair arrives, the coin cards say Loading. If that load fails and there is no saved pair, the card says "Could not load live prices. Try again." A later failed refresh keeps the last good pair and says the results may be using previous rates. The line under the button says when the prices were updated and that they may be stale. `ResetButton` clears the USD amount and sets the split back to 70/30. The empty field shows a `0.00` placeholder and no message.
 - The USD message follows the current text. Empty has none. Zero, a lone decimal, and a blocked character have one. Do not add a second timing rule.
 - The layout should stay usable on a phone. Do not hide the slider to make it fit. Below 640px the card tightens, the coin cards stack, and the slider stays visible.
-- Labels point at their fields. A keyboard user can reach the slider and both buttons.
+- Labels point at their fields. A keyboard user can reach the slider and both buttons. The BTC and ETH results are a polite live region, so a screen reader hears them when they change. The page sets `color-scheme` to light so a dark system theme does not restyle the controls.
 
 ## Rates
 

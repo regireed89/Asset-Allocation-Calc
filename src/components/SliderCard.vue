@@ -52,6 +52,27 @@ function priceText(rate) {
   return price === "" ? "" : formatAmount(price);
 }
 
+function spokenCoin(name, amount, dollars, each) {
+  const parts = [`${name} ${amount}`, `${dollars} dollars`];
+  if (each) parts.push(`${each} dollars each`);
+  return parts.join(", ");
+}
+
+const spokenResults = computed(() => {
+  if (!rates.value) return rateError.value ? "" : "Loading prices.";
+  return `${spokenCoin(
+    "BTC",
+    formatAmount(btc.value, "BTC"),
+    formatAmount(shares.value.btc),
+    priceText(rates.value.btc),
+  )}. ${spokenCoin(
+    "ETH",
+    formatAmount(eth.value, "ETH"),
+    formatAmount(shares.value.eth),
+    priceText(rates.value.eth),
+  )}.`;
+});
+
 watch(
   [shares, rates],
   () => {
@@ -83,6 +104,7 @@ onMounted(() => {
     <AmountSlider v-model="btcPercent" label="BTC percentage" step="1" />
     <CircleGraph :btc-percent="btcPercent" />
     <div class="results">
+      <p class="visually-hidden" aria-live="polite">{{ spokenResults }}</p>
       <div class="row">
         <AmountField
           id="btc"
