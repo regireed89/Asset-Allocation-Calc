@@ -2,6 +2,7 @@
 import { onMounted, ref, watch } from "vue";
 import AmountField from "./AmountField.vue";
 import AmountSlider from "./AmountSlider.vue";
+import CircleGraph from "./CircleGraph.vue";
 import RefreshRates from "./RefreshRates.vue";
 import ResetButton from "./ResetButton.vue";
 import UsdInput from "./UsdInput.vue";
@@ -73,6 +74,7 @@ onMounted(() => {
     <ResetButton @reset="resetCard" />
     <UsdInput v-model="usd" />
     <AmountSlider v-model="btcPercent" label="BTC percentage" step="1" />
+    <CircleGraph :btc-percent="btcPercent" />
     <div class="results">
       <div class="row">
         <AmountField id="btc" label="BTC" v-model="btc" readonly />

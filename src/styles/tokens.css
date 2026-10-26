@@ -212,6 +212,69 @@ body {
   color: var(--text-muted);
 }
 
+.circle-graph {
+  position: relative;
+  width: 240px;
+  max-width: 100%;
+  margin: 0 auto;
+}
+
+.circle-graph svg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.circle-graph-ring {
+  fill: none;
+  stroke-width: 22;
+}
+
+.circle-graph-btc {
+  stroke: var(--amount-card-top);
+}
+
+.circle-graph-eth {
+  stroke: var(--amount-card-bottom);
+}
+
+.circle-graph-center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  transform: translate(-50%, -50%);
+  color: var(--text);
+  pointer-events: none;
+}
+
+.circle-graph-side {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+.circle-graph-name {
+  font-size: 18px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+}
+
+.circle-graph-percent {
+  font-size: 22px;
+  font-weight: 700;
+}
+
+.circle-graph-divider {
+  font-size: 28px;
+  font-weight: 500;
+  line-height: 1;
+  color: var(--text-muted);
+}
+
 .amount-field {
   display: flex;
   flex-direction: column;
