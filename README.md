@@ -13,7 +13,7 @@ npm run dev
 
 Vite prints a local URL. Open that in a browser.
 
-`npm run build` writes the production files to `dist`. `npm run preview` serves that build. `npm run lint` checks the JavaScript. `npm run fmt` formats it.
+`npm run build` writes the production files to `dist`. `npm run preview` serves that build. `npm test` runs the logic tests. `npm run lint` checks the JavaScript. `npm run fmt` formats it.
 
 ## What was built
 
@@ -39,7 +39,7 @@ Labels point at their fields. The slider and both buttons can be reached from th
 
 - When a field error should appear is not decided. The USD field and the amount fields already include an error message for a value that is not a valid number. An empty USD field is allowed.
 - The card uses the full width of a narrow screen, and the slider stays on the page. A separate phone layout was not added.
-- No tests.
+- `npm test` covers the split math, USD parsing, and coin formatting. Component tests were left out.
 - The Vite starter files are still in the repo and are not part of the page: `src/components/HelloWorld.vue`, `src/style.css`, and the sample images in `src/assets`. The browser tab title in `index.html` is still `vite-scaffold`.
 
 ## Where AI was used

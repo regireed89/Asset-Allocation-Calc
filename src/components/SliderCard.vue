@@ -5,7 +5,7 @@ import AmountSlider from "./AmountSlider.vue";
 import RefreshRates from "./RefreshRates.vue";
 import ResetButton from "./ResetButton.vue";
 import UsdInput from "./UsdInput.vue";
-import { isValid } from "../utils/validation";
+import { coinAmount } from "../utils/coinAmount";
 import { loadExchangeRates } from "../utils/exchangeRates";
 
 const usd = defineModel("usd", { default: "0" });
@@ -38,27 +38,6 @@ async function pullRates(fromButton) {
   }
 }
 
-function formatAmount(amount) {
-  if (!Number.isFinite(amount) || amount === 0) return "0";
-  const text = amount.toFixed(8).replace(/\.?0+$/, "");
-  return text === "" ? "0" : text;
-}
-
-function shareAmount(dollars, percent, rate) {
-  if (!rates.value || dollars === "" || !isValid(dollars)) return "0";
-  const usdAmount = Number(dollars);
-  const share = Number(percent);
-  const unitRate = Number(rate);
-  if (
-    !Number.isFinite(usdAmount) ||
-    !Number.isFinite(share) ||
-    !Number.isFinite(unitRate)
-  ) {
-    return "0";
-  }
-  return formatAmount(usdAmount * (share / 100) * unitRate);
-}
-
 watch(
   [usd, btcPercent, rates],
   () => {
@@ -66,8 +45,13 @@ watch(
     const btcShare = Number.isFinite(percent)
       ? Math.min(100, Math.max(0, percent))
       : 0;
-    btc.value = shareAmount(usd.value, btcShare, rates.value?.btc);
-    eth.value = shareAmount(usd.value, 100 - btcShare, rates.value?.eth);
+    if (!rates.value) {
+      btc.value = "0";
+      eth.value = "0";
+      return;
+    }
+    btc.value = coinAmount(usd.value, btcShare, rates.value.btc);
+    eth.value = coinAmount(usd.value, 100 - btcShare, rates.value.eth);
   },
   { immediate: true },
 );

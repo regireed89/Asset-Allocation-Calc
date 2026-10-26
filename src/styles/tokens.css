@@ -86,9 +86,9 @@ body {
   font-size: 24px;
   font-weight: 600;
   letter-spacing: 0.08em;
-  color: var(--text-muted);
-  background: var(--bg-pill);
-  border-radius: 999px;
+  color: var(--text-on-accent);
+  background: var(--accent);
+  border-radius: 12px;
   padding: 8px 24px;
 }
 
@@ -329,7 +329,7 @@ input.invalid:focus-visible {
   color: var(--text-on-accent);
   background: var(--accent);
   border: none;
-  border-radius: 999px;
+  border-radius: 12px;
   cursor: pointer;
 }
 
