@@ -45,3 +45,8 @@ One coding agent. No subagents. Add a row when a prompt changes the project. Nam
 | Add a slight shadow to the thumb. | Grok 4.7. The thumb has a short soft shadow in the page’s dark green. | — |
 | Add an “Amount to allocate” label to the input section and move USD inside the input, to the right of the amount. | Grok 4.7. The field label is “Amount to allocate.” USD sits inside the field just to the right of the typed amount. The dollar sign stays on the left. | — |
 | Add the two changes for numbers that leave their container. | Grok 4.7. The USD field keeps at most 12 digits before the decimal and blocks another digit with a short message. The amount and coin type keep shrinking so they fit, and the dollar and price lines stay clipped inside the card. A computed coin amount no longer shows “Enter a valid amount.” | — |
+| Make the background more opaque. | Grok 4.7. The chart grid is solid, in the card’s border green, instead of a faint 55% line. | — |
+| More opaque. | Grok 4.7. The chart field is a deeper sage, and the grid is the dark card green at full strength. | — |
+| Add a very subtle pale-green radial gradient behind the calculator. | Grok 4.7. A soft pale-green ellipse sits behind the card and fades into the chart. | — |
+| Set the background opacity back to the original. | Grok 4.7. The chart field is the pale page sage again, and the grid is the faint border green at 55% opacity. | — |
+| When scrolling down, blank space covers the background image. | Grok 4.7. The glow behind the card no longer stretches past the page, so the chart stays visible below the card. | — |
